@@ -1,21 +1,15 @@
-"use client"
+import { ChangeEvent } from "react"
 
-import { ChangeEvent, ChangeEventHandler, useState } from "react"
+type ChatInputProps = {
+    value: string,
+    onTextChanged: (event: ChangeEvent<HTMLInputElement>) => void
+}
 
-export const ChatInput = () => {
-    const [textValue, setTextValue] = useState<string>("")
-
-    const onTextChanged = (changedEvent: ChangeEvent<HTMLInputElement>) => {
-        const text = changedEvent.target.textContent ?? ""
-        if (text === "") return
-
-        setTextValue(text)
-    }
-
+export const ChatInput = ({...props}: ChatInputProps) => {
     return (
         <input
-            value={textValue}
-            onChange={onTextChanged}
+            value={props.value}
+            onChange={props.onTextChanged}
         /> 
     )
 }

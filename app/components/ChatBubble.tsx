@@ -5,6 +5,8 @@ type ChatBubbleProps = {
 
 export const ChatBubble = (props: ChatBubbleProps) => {
     return <>
-        <p>${props.text}</p>
+        <li>
+            <p>${props.text}</p>
+        </li>
     </>
 }
