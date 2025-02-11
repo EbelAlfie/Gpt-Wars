@@ -1,11 +1,14 @@
+import { sha3_512 } from "js-sha3";
 import { ChatRequirementResponse } from "./model/ChatRequirementResponse";
 import { MeResponse } from "./model/MeResponse";
+
+export const answers = new Map()
 
 export const getEnforcementToken = async (chatRequirement: ChatRequirementResponse) => {
     if (!chatRequirement.proofofwork?.required)
         return null;
     const {seed: n, difficulty: r} = chatRequirement.proofofwork;
-    return typeof n == "string" && typeof r == "string" ? (answers.has(n) || this.answers.set(n, this._generateAnswer(n, r)),
+    return typeof n == "string" && typeof r == "string" ? (answers.has(n) || answers.set(n, generateAnswer(n, r)),
     "gAAAAAB" + await answers.get(n)) : null
 }
 
@@ -52,17 +55,29 @@ export async function generateAnswer(seed: string, difficulty: string) {
     const o = performance.now();
     try {
         let a = null;
-        const s = this.getConfig();
+        const s = getConfig();
+        let firstConfig = Math?.random() ; //s[3]
+        let secondConfig = Math?.random(); //s[9]
+
         for (let i = 0; i < maxAttempts; i++) {
-            (!a || a.timeRemaining() <= 0) && (a = await d0()),
-            s[3] = i,
-            s[9] = Math.round(performance.now() - o);
-            const c = ml(s);
-            if (i0.sha3_512(seed + c).substring(0, difficulty.length) <= difficulty)
+            // (!a || a.timeRemaining() <= 0) && (a = await d0()),
+            s[3] = i //s[3] = i,
+            s[9] = Math.round(performance.now() - o); //s[9]
+            const c = textDecoder(s);
+            if (sha3_512(seed + c).substring(0, difficulty.length) <= difficulty)
                 return c
         }
     } catch (a) {
-        r = ml("" + a)
+        r = textDecoder("" + a)
     }
     return "wQ8Lk5FbGpA2NcR9dShT6gYjU7VxZ4D" + r
+}
+
+function getConfig() {
+    return [screen?.width + screen?.height, "" + new Date, performance?.memory?.jsHeapSizeLimit, Math?.random(), navigator?.userAgent, jo(Array.from(document.scripts).map(t => t?.src).filter(t => t)), (Array.from(document.scripts || []).map(t => t?.src?.match("c/[^/]*/_")).filter(t => t?.length)[0] ?? [])[0] ?? document.documentElement.getAttribute("data-build"), navigator.language, navigator.languages?.join(","), Math?.random(), u0(), jo(Object.keys(document)), jo(Object.keys(window)), performance.now(), this.sid, [...new URLSearchParams(window.location.search).keys()].join(","), navigator?.hardwareConcurrency, performance.timeOrigin]
+}
+
+function textDecoder(text: any) {
+    return text = JSON.stringify(text),
+    window.TextEncoder ? btoa(String.fromCharCode(...new TextEncoder().encode(text))) : btoa(unescape(encodeURIComponent(text)))
 }

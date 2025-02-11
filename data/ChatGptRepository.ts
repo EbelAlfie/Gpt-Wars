@@ -34,7 +34,9 @@ class ChatGptRepository {
                 maxBodyLength: Infinity,
                 url: 'https://chatgpt.com/backend-anon/conversation',
                 headers: { 
-                    
+                    "openai-sentinel-turnstile-token": "",
+                    "openai-sentinel-proof-token": "",
+                    "openai-sentinel-chat-requirements-token": ""
                 },
                 data : data
             };
