@@ -1,21 +1,13 @@
 import axios, { AxiosResponse } from "axios"
 import { MeResponse } from "./model/MeResponse"
+import { ChatRequirementResponse } from "./model/ChatRequirementResponse"
+import { ChatRequirementRequest } from "@/domain/model/ChatRequirementRequest"
+import { ConversationRequest } from "@/domain/model/ConversationRequest"
 
-class ChatGptRepository {
+export class ChatGptRepository {
     webSocket: WebSocket| null = null
 
     constructor() {}
-
-    onOpen(event: Event) {}
-    onError(event: Event) {}
-    onMessage(event: MessageEvent) {}
-
-    openWebsocket() {
-        this.webSocket = new WebSocket("")
-        this.webSocket.onopen = this.onOpen
-        this.webSocket.onmessage = this.onMessage
-        this.webSocket.onerror = this.onError
-    }
 
     async initMe(): Promise<AxiosResponse<MeResponse, any>> {
         const config = {
@@ -26,27 +18,33 @@ class ChatGptRepository {
         return axios.request<any, AxiosResponse<MeResponse>, any>(config)
     }
 
-    async openConversation() {
-        let data = JSON.stringify({});
+    async getChatRequirement(request: ChatRequirementRequest): Promise<AxiosResponse<ChatRequirementResponse, any>> {
+        const config = {
+            method: "POST",
+            url: "https://chatgpt.com/backend-anon/sentinel/chat-requirements",
+            data: request,
+            headers: {
+                "oai-device-id": process.env.NEXT_APP_DEVICE_ID
+            }
+        }
+        return axios.request<any, AxiosResponse<ChatRequirementResponse>, any>(config)
+    }
 
-            let config = {
-                method: 'POST',
-                maxBodyLength: Infinity,
-                url: 'https://chatgpt.com/backend-anon/conversation',
-                headers: { 
-                    "openai-sentinel-turnstile-token": "",
-                    "openai-sentinel-proof-token": "",
-                    "openai-sentinel-chat-requirements-token": ""
-                },
-                data : data
-            };
+    async openConversation(request: ConversationRequest) {
+        let config = {
+            method: 'POST',
+            maxBodyLength: Infinity,
+            url: 'https://chatgpt.com/backend-anon/conversation',
+            headers: { 
+                "openai-sentinel-turnstile-token": request.turnstileToken,
+                "openai-sentinel-proof-token": request.proofToken,
+                "openai-sentinel-chat-requirements-token": request.chatRequirementToken,
+                "content-type": "application/json",
+                "accept": "text/event-stream"
+            }
+        };
 
-        return axios.request(config)
-            .then((response) => {
-                console.log(JSON.stringify(response.data));
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        console.log(config.headers)
+        return axios.request({})
     }
 }

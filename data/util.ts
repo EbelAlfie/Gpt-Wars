@@ -1,22 +1,21 @@
 import { sha3_512 } from "js-sha3";
 import { ChatRequirementResponse } from "./model/ChatRequirementResponse";
-import { MeResponse } from "./model/MeResponse";
 
-export const answers = new Map()
+export const answers = new Map<number, string>()
 
-export const getEnforcementToken = async (chatRequirement: ChatRequirementResponse) => {
+export const getEnforcementToken = (chatRequirement: ChatRequirementResponse): string| null => {
     if (!chatRequirement.proofofwork?.required)
         return null;
     const {seed: n, difficulty: r} = chatRequirement.proofofwork;
     return typeof n == "string" && typeof r == "string" ? (answers.has(n) || answers.set(n, generateAnswer(n, r)),
-    "gAAAAAB" + await answers.get(n)) : null
+    "gAAAAAB" + answers.get(n)) : null
 }
 
 /*
     t = resolve
     n = reject
 */ 
-export const constructTurnsTileToken = (turnsToken: string) => {
+export const constructTurnsTileToken = (turnsToken: string): Promise<string> => {
     const key1 = 3
     const key2 = 4
     const vs = 9
@@ -48,7 +47,7 @@ function ff(e: string, t: string) {
     return n
 }
 
-export async function generateAnswer(seed: string, difficulty: string) {
+export function generateAnswer(seed: number, difficulty: string) {
     const maxAttempts = 500000
     
     let r = "e";
@@ -80,4 +79,10 @@ function getConfig() {
 function textDecoder(text: any) {
     return text = JSON.stringify(text),
     window.TextEncoder ? btoa(String.fromCharCode(...new TextEncoder().encode(text))) : btoa(unescape(encodeURIComponent(text)))
+}
+
+export function getRequirementsToken() {
+    const requirementsSeed = Math.random()
+    return answers.has(requirementsSeed) || answers.set(requirementsSeed, generateAnswer(requirementsSeed, "0")),
+    "gAAAAAC" + answers.get(requirementsSeed)
 }
