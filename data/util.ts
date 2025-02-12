@@ -1,7 +1,8 @@
+"use client"
 import { sha3_512 } from "js-sha3";
 import { ChatRequirementResponse } from "./model/ChatRequirementResponse";
 
-export const answers = new Map<number, string>()
+export const answers = new Map<string, string>()
 
 export const getEnforcementToken = (chatRequirement: ChatRequirementResponse): string| null => {
     if (!chatRequirement.proofofwork?.required)
@@ -47,33 +48,38 @@ function ff(e: string, t: string) {
     return n
 }
 
-export function generateAnswer(seed: number, difficulty: string) {
+export function generateAnswer(seed: string, difficulty: string) {
     const maxAttempts = 500000
-    
+    console.log("TEST")
+
     let r = "e";
     const o = performance.now();
     try {
-        let a = null;
         const s = getConfig();
-        let firstConfig = Math?.random() ; //s[3]
-        let secondConfig = Math?.random(); //s[9]
+        console.log("TEST")
 
         for (let i = 0; i < maxAttempts; i++) {
             // (!a || a.timeRemaining() <= 0) && (a = await d0()),
-            s[3] = i //s[3] = i,
+            s[3] = i 
             s[9] = Math.round(performance.now() - o); //s[9]
             const c = textDecoder(s);
             if (sha3_512(seed + c).substring(0, difficulty.length) <= difficulty)
                 return c
         }
     } catch (a) {
+        console.log(a)
         r = textDecoder("" + a)
     }
     return "wQ8Lk5FbGpA2NcR9dShT6gYjU7VxZ4D" + r
 }
 
 function getConfig() {
-    return [screen?.width + screen?.height, "" + new Date, performance?.memory?.jsHeapSizeLimit, Math?.random(), navigator?.userAgent, jo(Array.from(document.scripts).map(t => t?.src).filter(t => t)), (Array.from(document.scripts || []).map(t => t?.src?.match("c/[^/]*/_")).filter(t => t?.length)[0] ?? [])[0] ?? document.documentElement.getAttribute("data-build"), navigator.language, navigator.languages?.join(","), Math?.random(), u0(), jo(Object.keys(document)), jo(Object.keys(window)), performance.now(), this.sid, [...new URLSearchParams(window.location.search).keys()].join(","), navigator?.hardwareConcurrency, performance.timeOrigin]
+    return [screen?.width + screen?.height, "" + new Date, performance?.memory?.jsHeapSizeLimit, Math?.random(), navigator?.userAgent, jo(Array.from(document.scripts).map(t => t?.src).filter(t => t)), (Array.from(document.scripts || []).map(t => t?.src?.match("c/[^/]*/_")).filter(t => t?.length)[0] ?? [])[0] ?? document.documentElement.getAttribute("data-build"), navigator.language, navigator.languages?.join(","), Math?.random(), u0(), jo(Object.keys(document)), jo(Object.keys(window)), performance.now(), generateSid(), [...new URLSearchParams(window.location.search).keys()].join(","), navigator?.hardwareConcurrency, performance.timeOrigin]
+}
+
+function generateSid() {
+    if (crypto.randomUUID)
+        return crypto.randomUUID()
 }
 
 function textDecoder(text: any) {
@@ -82,7 +88,21 @@ function textDecoder(text: any) {
 }
 
 export function getRequirementsToken() {
-    const requirementsSeed = Math.random()
+    const requirementsSeed = `${Math.random()}`
     return answers.has(requirementsSeed) || answers.set(requirementsSeed, generateAnswer(requirementsSeed, "0")),
     "gAAAAAC" + answers.get(requirementsSeed)
+}
+
+//Garbage function
+function jo(e: string[]) {
+    return e[Math.floor(Math.random() * e.length)]
+}
+
+function u0() {
+    const e = jo(Object.keys(Object.getPrototypeOf(navigator)));
+    try {
+        return `${e}−${navigator[e].toString()}`
+    } catch {
+        return `${e}`
+    }
 }

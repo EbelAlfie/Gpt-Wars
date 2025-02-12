@@ -3,6 +3,7 @@ import { MeResponse } from "./model/MeResponse"
 import { ChatRequirementResponse } from "./model/ChatRequirementResponse"
 import { ChatRequirementRequest } from "@/domain/model/ChatRequirementRequest"
 import { ConversationRequest } from "@/domain/model/ConversationRequest"
+import { getChatRequirement, startConversation } from "./action/Conversation"
 
 export class ChatGptRepository {
     webSocket: WebSocket| null = null
@@ -18,33 +19,40 @@ export class ChatGptRepository {
         return axios.request<any, AxiosResponse<MeResponse>, any>(config)
     }
 
-    async getChatRequirement(request: ChatRequirementRequest): Promise<AxiosResponse<ChatRequirementResponse, any>> {
+    async getChatRequirement(request: ChatRequirementRequest): Promise<ChatRequirementResponse> {
+        // return getChatRequirement(request)
+        const deviceId = process.env.NEXT_PUBLIC_DEVICE_ID
         const config = {
             method: "POST",
             url: "https://chatgpt.com/backend-anon/sentinel/chat-requirements",
             data: request,
             headers: {
-                "oai-device-id": process.env.NEXT_APP_DEVICE_ID
+                "oai-device-id": deviceId
             }
         }
-        return axios.request<any, AxiosResponse<ChatRequirementResponse>, any>(config)
+        return await axios.request<any, AxiosResponse<ChatRequirementResponse>, any>(config)
+            .then(response => response.data)
     }
 
     async openConversation(request: ConversationRequest) {
+        // return startConversation(request)
+        const deviceId = process.env.NEXT_PUBLIC_DEVICE_ID 
         let config = {
             method: 'POST',
             maxBodyLength: Infinity,
             url: 'https://chatgpt.com/backend-anon/conversation',
             headers: { 
+                "oai-device-id": deviceId,
                 "openai-sentinel-turnstile-token": request.turnstileToken,
                 "openai-sentinel-proof-token": request.proofToken,
                 "openai-sentinel-chat-requirements-token": request.chatRequirementToken,
-                "content-type": "application/json",
-                "accept": "text/event-stream"
+                'accept': 'text/event-stream',             
+                'content-type': 'application/json', 
             }
         };
-
+    
         console.log(config.headers)
-        return axios.request({})
+        return await axios.request(config)
+            .then(response => response.data)
     }
 }

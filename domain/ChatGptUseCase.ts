@@ -12,11 +12,24 @@ export class ChatGptUseCase {
     async getChatRequirement(request: ChatRequirementRequest) {
         return this.repository.getChatRequirement(request)
         .then(response => {
-            return response.data
+            return response
+        })
+        .catch(error => {
+            console.log(error)
+            return error
         })
     }
 
     async openConversation(request: ConversationRequest) {
         return this.repository.openConversation(request)
+            .then(response => {
+                const data = response.data
+                console.log(data)
+                return data
+            })
+            .catch(error => {
+                console.log(error)
+                return error
+            })
     }
 }
