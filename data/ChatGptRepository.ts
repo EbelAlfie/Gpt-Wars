@@ -7,6 +7,7 @@ import { getChatRequirement, startConversation } from "./action/Conversation"
 
 export class ChatGptRepository {
     webSocket: WebSocket| null = null
+    deviceId = process.env.NEXT_PUBLIC_DEVICE_ID
 
     constructor() {}
 
@@ -20,14 +21,12 @@ export class ChatGptRepository {
     }
 
     async getChatRequirement(request: ChatRequirementRequest): Promise<ChatRequirementResponse> {
-        // return getChatRequirement(request)
-        const deviceId = process.env.NEXT_PUBLIC_DEVICE_ID
         const config = {
             method: "POST",
             url: "https://chatgpt.com/backend-anon/sentinel/chat-requirements",
             data: request,
             headers: {
-                "oai-device-id": deviceId
+                "oai-device-id": this.deviceId
             }
         }
         return await axios.request<any, AxiosResponse<ChatRequirementResponse>, any>(config)
@@ -35,14 +34,12 @@ export class ChatGptRepository {
     }
 
     async openConversation(request: ConversationRequest) {
-        // return startConversation(request)
-        const deviceId = process.env.NEXT_PUBLIC_DEVICE_ID 
         let config = {
             method: 'POST',
             maxBodyLength: Infinity,
             url: 'https://chatgpt.com/backend-anon/conversation',
             headers: { 
-                "oai-device-id": deviceId,
+                "oai-device-id": this.deviceId,
                 "openai-sentinel-turnstile-token": request.turnstileToken,
                 "openai-sentinel-proof-token": request.proofToken,
                 "openai-sentinel-chat-requirements-token": request.chatRequirementToken,
@@ -52,7 +49,7 @@ export class ChatGptRepository {
         };
     
         console.log(config.headers)
-        return await axios.request(config)
+        return await axios.request({})
             .then(response => response.data)
     }
 }

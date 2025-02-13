@@ -13,9 +13,9 @@ export const useChat = async (useCase: ChatGptUseCase) => {
     const turntileToken = await constructTurnsTileToken(chatRequirement.turnstile.dx)
     const proofToken = getEnforcementToken(chatRequirement)
 
-    const a = useCase.openConversation({
-        chatRequirementToken: chatRequirement.token,
-        turnstileToken: turntileToken,
-        proofToken: proofToken?? ""
-    })
+    // const a = useCase.openConversation({
+    //     chatRequirementToken: chatRequirement.token,
+    //     turnstileToken: turntileToken,
+    //     proofToken: proofToken?? "",
+    // })
 }
