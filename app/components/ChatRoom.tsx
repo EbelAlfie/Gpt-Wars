@@ -11,7 +11,30 @@ export const ChatRoom = () => {
     const [chatList, setChatList] = useState<Message[]>([])
 
     const onSend = (text: string) => {
-        sendChat(useCase, text, chatList.pop())
+        sendChat(useCase, text, chatList.pop(), (state) => {
+            if (state instanceof Error) {
+                return 
+            }
+
+            const message: Message = {
+                id: state.id,
+                content: state.content.parts[0],
+                author: state.author.role
+            }
+
+            const newList = chatList
+            const exitingMessage = newList.findIndex(message => {
+                message.id === state.id
+            })
+
+            if (exitingMessage === -1) {
+                newList.push(message)
+            } else {
+                newList[exitingMessage] = message
+            }
+            
+            setChatList(newList)
+        })
     }
     
     return <>

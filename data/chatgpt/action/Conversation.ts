@@ -1,9 +1,9 @@
 "use server"
 
-import { ChatRequirementRequest } from "@/domain/model/ChatRequirementRequest"
+import { ChatRequirementRequest } from "@/domain/chatgpt/model/ChatRequirementRequest"
 import axios, { AxiosResponse } from "axios"
 import { ChatRequirementResponse } from "../model/ChatRequirementResponse"
-import { ConversationRequest } from "@/domain/model/ConversationRequest"
+import { ConversationRequest } from "@/domain/chatgpt/model/ConversationRequest"
 
 const deviceId = process.env.NEXT_APP_DEVICE_ID
 

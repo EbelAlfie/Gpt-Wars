@@ -1,8 +1,8 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios"
 import { MeResponse } from "./model/MeResponse"
 import { ChatRequirementResponse } from "./model/ChatRequirementResponse"
-import { ChatRequirementRequest } from "@/domain/model/ChatRequirementRequest"
-import { ConversationRequest } from "@/domain/model/ConversationRequest"
+import { ChatRequirementRequest } from "@/domain/chatgpt/model/ChatRequirementRequest"
+import { ConversationRequest } from "@/domain/chatgpt/model/ConversationRequest"
 
 export class ChatGptRepository {
     webSocket: WebSocket| null = null
@@ -53,10 +53,7 @@ export class ChatGptRepository {
         };
     
         console.log(config.headers)
-        return await axios.request(config)
-            .then(response => {
-                console.log(response)
-                return response
-            })
+        return await axios.request<any, AxiosResponse<ReadableStream, any>>(config)
+            .then(response => response.data)
     }
 }

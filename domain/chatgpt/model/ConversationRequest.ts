@@ -25,10 +25,10 @@ type RequestBody = {
 export type MessageRequest = {
     id: string,
     author: AuthorRequest,
-    create_time: number,
+    create_time?: number,
     content: MessageContent,
-    metadata: MessageMetadata,
-    dictation: boolean
+    metadata?: MessageMetadata,
+    dictation?: boolean
 }
 
 type AuthorRequest = {

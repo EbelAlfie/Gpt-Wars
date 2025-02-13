@@ -1,4 +1,6 @@
-import { MessageRequest } from "../model/ConversationRequest";
+import { ChatEvent } from "@/common/Constants";
+import { MessageRequest } from "../chatgpt/model/ConversationRequest";
+import { ServerEvent } from "./ServerEvent";
 
 export type Message = {
     id: string,
