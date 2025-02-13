@@ -1,9 +1,8 @@
-import axios, { AxiosResponse } from "axios"
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios"
 import { MeResponse } from "./model/MeResponse"
 import { ChatRequirementResponse } from "./model/ChatRequirementResponse"
 import { ChatRequirementRequest } from "@/domain/model/ChatRequirementRequest"
 import { ConversationRequest } from "@/domain/model/ConversationRequest"
-import { getChatRequirement, startConversation } from "./action/Conversation"
 
 export class ChatGptRepository {
     webSocket: WebSocket| null = null
@@ -34,7 +33,7 @@ export class ChatGptRepository {
     }
 
     async openConversation(request: ConversationRequest) {
-        let config = {
+        let config: AxiosRequestConfig = {
             method: 'POST',
             maxBodyLength: Infinity,
             url: 'https://chatgpt.com/backend-anon/conversation',
@@ -43,10 +42,14 @@ export class ChatGptRepository {
                 "openai-sentinel-turnstile-token": request.turnstileToken,
                 "openai-sentinel-proof-token": request.proofToken,
                 "openai-sentinel-chat-requirements-token": request.chatRequirementToken,
+                
                 'accept': 'text/event-stream',             
-                'content-type': 'application/json', 
+                'content-type': 'application/json',
+                'accept-language': 'en-US,en;q=0.9,id;q=0.8', 
             },
-            data: request.requestBody
+            data: request.requestBody,
+            adapter: "fetch",
+            responseType: "stream"
         };
     
         console.log(config.headers)
