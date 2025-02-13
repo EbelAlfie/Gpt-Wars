@@ -1,25 +1,23 @@
+import { Role } from "@/common/Constants";
 import { generateSid } from "@/data/util";
+import { MessageRequest } from "@/domain/model/ConversationRequest";
 
-export function createTree() {
+export function createMessage(
+    role: Role,
+    message: string
+): MessageRequest {
     return {
-        root: {
-            id: "root",
-            children: [],
-            parentId: "",
-            message: createRootMessage()
-        }
-    }
-}
-export function createRootMessage() {
-    return {
-        id: createId("aaa1"),
+        id: "0a54937a-7518-4b52-8461-2e2a16d8c0cd",
         author: {
-            role: "root"
+            role: role
         },
         content: {
             content_type: "text",
-            parts: []
-        }
+            parts: [message]
+        },
+        create_time: 1, 
+        metadata : {serialization_metadata:{"custom_symbol_offsets":[]}}, 
+        dictation: false
     }
 }
 

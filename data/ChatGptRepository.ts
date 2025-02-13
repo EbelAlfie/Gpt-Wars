@@ -45,11 +45,12 @@ export class ChatGptRepository {
                 "openai-sentinel-chat-requirements-token": request.chatRequirementToken,
                 'accept': 'text/event-stream',             
                 'content-type': 'application/json', 
-            }
+            },
+            data: request.requestBody
         };
     
         console.log(config.headers)
-        return await axios.request({})
+        return await axios.request(config)
             .then(response => response.data)
     }
 }

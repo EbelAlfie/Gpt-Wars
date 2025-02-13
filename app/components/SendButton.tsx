@@ -5,7 +5,7 @@ type ButtonProps = {
 export const SendButton = ({...props}: ButtonProps) => {
     return (
         <button 
-            className="p-5 bg-white rounded-lg"
+            className="m-3 py-2 px-5 bg-white rounded-lg text-blue-700"
             onClick={props.onClick}
         >
             Send

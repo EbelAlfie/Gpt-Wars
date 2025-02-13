@@ -1,20 +1,17 @@
 import { useContext, useEffect, useState } from "react"
-import { useChat } from "../hook/useChat"
+import { sendChat } from "../hook/useChat"
 import { ChatList } from "./ChatList"
 import { ViewModel } from "../hook/ViewModel"
 import { ChatFooter } from "./ChatFooter"
+import { Message } from "@/domain/entity/Message"
 
 export const ChatRoom = () => {
     const useCase = useContext(ViewModel)
     
-    const [chatList, setChatList] = useState<string[]>([""])
-
-    useEffect(() => {
-        useChat(useCase)
-    }, [])
+    const [chatList, setChatList] = useState<Message[]>([])
 
     const onSend = (text: string) => {
-        // useCase.openConversation()
+        sendChat(useCase, text, chatList.pop())
     }
     
     return <>

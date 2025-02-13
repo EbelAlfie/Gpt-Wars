@@ -8,7 +8,7 @@ export type ConversationRequest = {
 
 type RequestBody = {
     action: string,
-    messages: MessageRequest,
+    messages: MessageRequest[],
     parent_message_id: string,
     model: string,
     timezone_offset_min: number,
@@ -22,7 +22,7 @@ type RequestBody = {
     paragen_cot_summary_display_override: string
 }
 
-type MessageRequest = {
+export type MessageRequest = {
     id: string,
     author: AuthorRequest,
     create_time: number,

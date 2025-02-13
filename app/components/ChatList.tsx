@@ -1,13 +1,16 @@
+import { Message } from "@/domain/entity/Message"
 import { ChatBubble } from "./ChatBubble"
 
 type ChatListProps = { 
-    chats: string[]
+    chats: Message[]
 }
 
 export const ChatList = ({...props}: ChatListProps) => { 
-    const chatBubbles = props.chats.map(chat => <ChatBubble text={chat}/>)
+    const chatBubbles = props.chats.map(chat => 
+        <ChatBubble key={chat.id} text={chat.content}/>
+    )
     return <>
-        <ul className="flex-grow">
+        <ul className="w-screen flex-grow">
             {chatBubbles}
         </ul>
     </>
