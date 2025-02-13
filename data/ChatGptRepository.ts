@@ -51,6 +51,9 @@ export class ChatGptRepository {
     
         console.log(config.headers)
         return await axios.request(config)
-            .then(response => response.data)
+            .then(response => {
+                console.log(response)
+                return response
+            })
     }
 }

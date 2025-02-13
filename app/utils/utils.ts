@@ -7,7 +7,7 @@ export function createMessage(
     message: string
 ): MessageRequest {
     return {
-        id: "0a54937a-7518-4b52-8461-2e2a16d8c0cd",
+        id: generateSid(),
         author: {
             role: role
         },

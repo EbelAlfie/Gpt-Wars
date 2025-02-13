@@ -78,8 +78,7 @@ function getConfig() {
 }
 
 export function generateSid() {
-    if (crypto.randomUUID)
-        return crypto.randomUUID()
+    return crypto.randomUUID()
 }
 
 function textDecoder(text: any) {

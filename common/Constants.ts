@@ -5,5 +5,6 @@ export enum CompletionType {
 
 export enum Role { 
     Root = "root",
-    User = "user"
+    User = "user",
+    Assistant = "assistant"
 }
