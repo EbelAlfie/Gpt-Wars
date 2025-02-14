@@ -2,11 +2,14 @@
 import { constructTurnsTileToken, getEnforcementToken, getRequirementsToken } from "@/data/chatgpt/utilChatGpt";
 import { ChatGptUseCase } from "@/domain/chatgpt/ChatGptUseCase";
 import { createMessage } from "../utils/utils";
-import { CompletionType, Role } from "@/common/Constants";
+import { CompletionType, OperationTypes, Role } from "@/common/Constants";
 import { MessageRequest } from "@/domain/chatgpt/model/ConversationRequest";
 import { Message } from "@/domain/entity/Message";
-import { ServerEvent } from "@/domain/entity/ServerEvent";
+import { ServerData, ServerEvent } from "@/domain/entity/ServerEvent";
 import { ChatState } from "../components/state/ChatState";
+import { GptMessageProcessor } from "../chatgpt/GptMessageProcessor";
+
+const processor = new GptMessageProcessor()
 
 export const sendChat = async (
     useCase: ChatGptUseCase, 
@@ -26,10 +29,8 @@ export const sendChat = async (
         } else if (message.event !== "ping") 
             try {
                 let data = JSON.parse(message.data)
-                if ("v" in data) {
-                    const message: MessageRequest = JSON.parse(data.v)
-                    if (message.content.parts.length > 0) onChatState(message)
-                }
+                const list = processor.process(data)
+                console.log(`datas: ${list}`)
             } catch (error) {
                 // console.log(error)
             }
@@ -44,7 +45,7 @@ export const sendChat = async (
     const chatStream = await useCase.openConversation({
             chatRequirementToken: chatRequirement.token,
             turnstileToken: turntileToken,
-            proofToken: proofToken?? "",
+            proofToken: proofToken ?? "",
             requestBody: {
                     action: CompletionType.Next,
                     messages: [messageRequest],

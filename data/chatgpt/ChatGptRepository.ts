@@ -1,3 +1,4 @@
+"use client"
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios"
 import { MeResponse } from "./model/MeResponse"
 import { ChatRequirementResponse } from "./model/ChatRequirementResponse"
@@ -42,10 +43,9 @@ export class ChatGptRepository {
                 "openai-sentinel-turnstile-token": request.turnstileToken,
                 "openai-sentinel-proof-token": request.proofToken,
                 "openai-sentinel-chat-requirements-token": request.chatRequirementToken,
-                
+
                 'accept': 'text/event-stream',             
-                'content-type': 'application/json',
-                'accept-language': 'en-US,en;q=0.9,id;q=0.8', 
+                'content-type': 'application/json'
             },
             data: request.requestBody,
             adapter: "fetch",

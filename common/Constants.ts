@@ -15,16 +15,11 @@ export enum ChatEvent {
     Ping = "ping"
 }
 
-export const EventCodes = [
-    ['channel', 'c'],
-    ['path', 'p'],
-    ['op', 'o'],
-    ['value', 'v']
-]
-
-export const EventCode = {
-    'c': 'channel',
-    'p': 'path',
-    'o': 'op',
-    'v': 'value'
+export enum OperationTypes {
+    Patch = "patch",
+    Add = "add",
+    Remove = "remove",
+    Replace = "replace",
+    Append = "append",
+    Truncate = "truncate"
 }

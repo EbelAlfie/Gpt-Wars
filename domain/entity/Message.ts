@@ -1,6 +1,6 @@
 import { ChatEvent } from "@/common/Constants";
 import { MessageRequest } from "../chatgpt/model/ConversationRequest";
-import { ServerEvent } from "./ServerEvent";
+import { ServerData } from "./ServerEvent";
 
 export type Message = {
     id: string,
@@ -13,5 +13,22 @@ export function mapToMessage(response: MessageRequest) : Message {
         id: response?.id ?? "",
         author: response.author.role,
         content: response.content.parts[0]
+    }
+}
+
+/**Either construct a message Object or get the raw Value */
+export function mapServerDataToMessage(data: ServerData) : Message {
+    let message 
+    try {
+        message = JSON.parse(data.value)
+    } catch(error) {
+        console.log(error)
+        message = data.value
+    }
+
+    return {
+        id: message?.id ?? "",
+        author: message?.author.role,
+        content: message?.content?.parts[0] ?? message
     }
 }
