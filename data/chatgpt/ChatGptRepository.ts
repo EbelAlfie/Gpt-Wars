@@ -43,7 +43,7 @@ export class ChatGptRepository {
                 "openai-sentinel-turnstile-token": request.turnstileToken,
                 "openai-sentinel-proof-token": request.proofToken,
                 "openai-sentinel-chat-requirements-token": request.chatRequirementToken,
-
+                
                 'accept': 'text/event-stream',             
                 'content-type': 'application/json'
             },

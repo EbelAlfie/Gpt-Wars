@@ -72,7 +72,26 @@ export function generateAnswer(seed: string, difficulty: string) {
 }
 
 function getConfig() {
-    return [screen?.width + screen?.height, "" + new Date, performance?.memory?.jsHeapSizeLimit, Math?.random(), navigator?.userAgent, jo(Array.from(document.scripts).map(t => t?.src).filter(t => t)), (Array.from(document.scripts || []).map(t => t?.src?.match("c/[^/]*/_")).filter(t => t?.length)[0] ?? [])[0] ?? document.documentElement.getAttribute("data-build"), navigator.language, navigator.languages?.join(","), Math?.random(), u0(), jo(Object.keys(document)), jo(Object.keys(window)), performance.now(), generateSid(), [...new URLSearchParams(window.location.search).keys()].join(","), navigator?.hardwareConcurrency, performance.timeOrigin]
+    return [
+        screen?.width + screen?.height, 
+        "" + new Date, 
+        performance?.memory?.jsHeapSizeLimit, 
+        Math?.random(), 
+        navigator?.userAgent, 
+        jo(Array.from(document.scripts).map(t => t?.src).filter(t => t)), 
+        (Array.from(document.scripts || []).map(t => t?.src?.match("c/[^/]*/_")).filter(t => t?.length)[0] ?? [])[0] ?? document.documentElement.getAttribute("data-build"), 
+        navigator.language, 
+        navigator.languages?.join(","), 
+        Math?.random(), 
+        u0(), 
+        jo(Object.keys(document)), 
+        jo(Object.keys(window)), 
+        performance.now(), 
+        generateSid(), 
+        [...new URLSearchParams(window.location.search).keys()].join(","), 
+        navigator?.hardwareConcurrency, 
+        performance.timeOrigin
+    ]
 }
 
 export function generateSid() {
