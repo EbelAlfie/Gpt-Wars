@@ -2,8 +2,11 @@ import { ChatRepository } from "@/app/_characterai/_data/ChatRepository";
 import { mapRecentChat, RecentChatModel } from "./response_model/RecentChat";
 import { ChatTurnHistory, mapTurnHistory, parseTurn } from "./response_model/ChatTurnHistory";
 import { ChatEventType } from "@/app/global/ConstEnum";
+import { getRequestId } from "../utils";
 
 export class ChatUseCase {
+    userId = "58584831"
+    userName = "SethAriblaze"
     repository: ChatRepository = new ChatRepository()
 
     public async resurectCharacter(charId: string) {
@@ -47,7 +50,7 @@ export class ChatUseCase {
         message: string
     ) {
         const eventType = ChatEventType.CREATE_GENERATE
-        const requestId = crypto.randomUUID().slice(0, 24) + ""
+        const requestId = getRequestId(characterId)
         const primaryCandidateId = crypto.randomUUID() 
         const turnId = crypto.randomUUID() 
 
@@ -59,16 +62,16 @@ export class ChatUseCase {
                 tts_enabled: false,
                 selected_language: "",
                 character_id: characterId,
-                user_name: "SethAriblaze",
+                user_name: this.userName,
                 turn: {
                     turn_key: {
                         turn_id: turnId,
                         chat_id: chatId
                     },
                     author: {
-                        author_id: "58584831",
+                        author_id: this.userId,
                         is_human: true,
-                        name: "SethAriblaze"
+                        name: this.userName
                     },
                     candidates: [
                         {
@@ -106,6 +109,24 @@ export class ChatUseCase {
         }
 
         this.repository.sendMessage(JSON.stringify(model))
+    }
+
+    public async createChatRoom(characterId: string) {
+        const payload = {
+            command: ChatEventType.CREATE_CHAT,
+            request_id: getRequestId(characterId),
+            payload: {
+                chat: {
+                    chat_id: getRequestId(characterId),
+                    creator_id: this.userId,
+                    visibility: "VISIBILITY_PRIVATE",
+                    character_id: characterId,
+                    type: "TYPE_ONE_ON_ONE"
+                },
+                "with_greeting": true
+            },
+        }
+        this.repository.sendMessage(JSON.stringify(payload))
     }
 
     registerOpenListener(listener: (message: Event) => void) {

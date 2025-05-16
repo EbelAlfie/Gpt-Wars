@@ -28,12 +28,11 @@ export const ChatRoom = () => {
                 message.id === state.id
             })
 
-            if (exitingMessage === -1) {
-                newList.push(message)
-            } else {
-                newList[exitingMessage] = message
-            }
+            if (exitingMessage === -1) newList.push(message)
+            else newList[exitingMessage] = message
             
+            console.log("aushduaisdaisd")
+            console.log(message)
             setChatList(newList)
         })
     }

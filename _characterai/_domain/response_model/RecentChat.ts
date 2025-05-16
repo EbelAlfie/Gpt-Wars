@@ -15,7 +15,7 @@ export const mapRecentChat = ({ chats }: RecentChatResponse): RecentChatModel =>
         create_time,
         creator_id,
         character_id
-    } = chats[0] ?? {} //first or last?
+    } = chats ? chats[0] : {} //first or last?
 
     const result: RecentChatModel= {
         chatId : chat_id ?? "",
