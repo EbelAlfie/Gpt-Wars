@@ -2,8 +2,8 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios"
 import { MeResponse } from "./model/MeResponse"
 import { ChatRequirementResponse } from "./model/ChatRequirementResponse"
-import { ChatRequirementRequest } from "@/domain/chatgpt/model/ChatRequirementRequest"
-import { ConversationRequest } from "@/domain/chatgpt/model/ConversationRequest"
+import { ChatRequirementRequest } from "@/_chatgpt/domain/model/ChatRequirementRequest"
+import { ConversationRequest } from "@/_chatgpt/domain/model/ConversationRequest"
 
 export class ChatGptRepository {
     webSocket: WebSocket| null = null

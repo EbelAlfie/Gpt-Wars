@@ -2,7 +2,7 @@
 import { useMemo } from "react";
 import { ChatRoom } from "./components/ChatRoom";
 import { ViewModel } from "./hook/ViewModel";
-import { ChatGptUseCase } from "@/domain/chatgpt/ChatGptUseCase";
+import { ChatGptUseCase } from "@/_chatgpt/domain/ChatGptUseCase";
 
 export default function ChatPage() {
   const useCase = useMemo(() => new ChatGptUseCase(), []) 

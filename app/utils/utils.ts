@@ -1,6 +1,6 @@
 import { Role } from "@/common/Constants";
-import { generateSid } from "@/data/chatgpt/utilChatGpt";
-import { MessageRequest } from "@/domain/chatgpt/model/ConversationRequest";
+import { generateSid } from "@/_chatgpt/data/utilChatGpt";
+import { MessageRequest } from "@/_chatgpt/domain/model/ConversationRequest";
 
 export function createMessage(
     role: Role,

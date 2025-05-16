@@ -1,7 +1,7 @@
 "use client"
 import { sha3_512 } from "js-sha3";
 import { ChatRequirementResponse } from "./model/ChatRequirementResponse";
-import { ServerEvent } from "@/domain/entity/ServerEvent";
+import { ServerEvent } from "@/_chatgpt/domain/entity/ServerEvent";
 
 export const answers = new Map<string, string>()
 

@@ -1,8 +1,8 @@
-import { ChatGptRepository } from "@/data/chatgpt/ChatGptRepository";
+import { ChatGptRepository } from "@/_chatgpt/data/ChatGptRepository";
 import { ChatRequirementRequest } from "./model/ChatRequirementRequest";
 import { ConversationRequest } from "./model/ConversationRequest";
-import { decoder, HD } from "@/data/chatgpt/utilChatGpt";
-import { ServerEvent } from "../entity/ServerEvent";
+import { decoder, HD } from "@/_chatgpt/data/utilChatGpt";
+import { ServerEvent } from "./entity/ServerEvent";
 
 export class ChatGptUseCase {
     repository: ChatGptRepository = new ChatGptRepository()

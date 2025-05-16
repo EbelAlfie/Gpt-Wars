@@ -1,5 +1,4 @@
-import { ChatEvent } from "@/common/Constants";
-import { MessageRequest } from "../chatgpt/model/ConversationRequest";
+import { MessageRequest } from "../model/ConversationRequest";
 import { ServerData } from "./ServerEvent";
 
 export type Message = {

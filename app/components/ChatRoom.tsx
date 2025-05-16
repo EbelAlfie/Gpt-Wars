@@ -3,7 +3,7 @@ import { sendChat } from "../hook/useChat"
 import { ChatList } from "./ChatList"
 import { ViewModel } from "../hook/ViewModel"
 import { ChatFooter } from "./ChatFooter"
-import { Message } from "@/domain/entity/Message"
+import { Message } from "@/_chatgpt/domain/entity/Message"
 
 export const ChatRoom = () => {
     const useCase = useContext(ViewModel)
@@ -11,7 +11,8 @@ export const ChatRoom = () => {
     const [chatList, setChatList] = useState<Message[]>([])
 
     const onSend = (text: string) => {
-        sendChat(useCase, text, chatList.pop(), (state) => {
+        const lastChat = chatList.pop()
+        sendChat(useCase, text, lastChat, (state) => {
             if (state instanceof Error) {
                 return 
             }

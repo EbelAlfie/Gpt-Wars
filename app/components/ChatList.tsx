@@ -1,4 +1,4 @@
-import { Message } from "@/domain/entity/Message"
+import { Message } from "@/_chatgpt/domain/entity/Message"
 import { ChatBubble } from "./ChatBubble"
 
 type ChatListProps = { 

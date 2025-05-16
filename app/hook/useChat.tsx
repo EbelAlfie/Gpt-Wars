@@ -1,13 +1,13 @@
 "use client"
-import { constructTurnsTileToken, getEnforcementToken, getRequirementsToken } from "@/data/chatgpt/utilChatGpt";
-import { ChatGptUseCase } from "@/domain/chatgpt/ChatGptUseCase";
+import { constructTurnsTileToken, getEnforcementToken, getRequirementsToken } from "@/_chatgpt/data/utilChatGpt";
+import { ChatGptUseCase } from "@/_chatgpt/domain/ChatGptUseCase";
 import { createMessage } from "../utils/utils";
 import { CompletionType, OperationTypes, Role } from "@/common/Constants";
-import { MessageRequest } from "@/domain/chatgpt/model/ConversationRequest";
-import { Message } from "@/domain/entity/Message";
-import { ServerData, ServerEvent } from "@/domain/entity/ServerEvent";
+import { MessageRequest } from "@/_chatgpt/domain/model/ConversationRequest";
+import { Message } from "@/_chatgpt/domain/entity/Message";
+import { ServerData, ServerEvent } from "@/_chatgpt/domain/entity/ServerEvent";
 import { ChatState } from "../components/state/ChatState";
-import { GptMessageProcessor } from "../chatgpt/GptMessageProcessor";
+import { GptMessageProcessor } from "../../_chatgpt/presentation/GptMessageProcessor";
 
 const processor = new GptMessageProcessor()
 

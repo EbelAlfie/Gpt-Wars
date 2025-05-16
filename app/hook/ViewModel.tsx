@@ -1,4 +1,4 @@
-import { ChatGptUseCase } from "@/domain/chatgpt/ChatGptUseCase";
+import { ChatGptUseCase } from "@/_chatgpt/domain/ChatGptUseCase";
 import { createContext } from "react";
 
 export const ViewModel = createContext(new ChatGptUseCase())

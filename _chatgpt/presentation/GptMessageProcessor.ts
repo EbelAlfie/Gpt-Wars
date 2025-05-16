@@ -1,6 +1,6 @@
 import { OperationTypes } from "@/common/Constants";
-import { mapServerDataToMessage, Message } from "@/domain/entity/Message";
-import { EventCodes, ServerData } from "@/domain/entity/ServerEvent";
+import { mapServerDataToMessage, Message } from "@/_chatgpt/domain/entity/Message";
+import { EventCodes, ServerData } from "@/_chatgpt/domain/entity/ServerEvent";
 
 export class GptMessageProcessor {
     prevObj = []
