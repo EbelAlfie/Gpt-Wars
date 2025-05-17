@@ -19,7 +19,9 @@ export function mapToMessage(response: MessageRequest) : Message {
 export function mapServerDataToMessage(data: ServerData) : Message {
     let message 
     try {
-        message = JSON.parse(data.value)
+        console.log("data.value")
+        console.log(data.value)
+        message = data.value
     } catch(error) {
         console.log(error)
         message = data.value

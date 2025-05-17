@@ -171,8 +171,7 @@ export function decoder(n: (message: any) => void) {
               , f = s.decode(i.subarray(d));
             switch (c) {
             case "data":
-                r.data = r.data ? r.data + `
-` + f : f;
+                r.data = r.data ? r.data + `` + f : f;
                 break;
             case "event":
                 r.event = f;

@@ -20,7 +20,8 @@ export const sendChat = async (
     const requirementToken = { "p": getRequirementsToken() }
     const chatRequirement = await useCase.getChatRequirement(requirementToken)
     if (chatRequirement instanceof Error) {
-        
+        onChatState(chatRequirement)
+        return 
     }
 
     const onStreaming = (message: ServerEvent) => {
@@ -28,11 +29,15 @@ export const sendChat = async (
 
         } else if (message.event !== "ping") 
             try {
-                let data = JSON.parse(message.data)
-                const list = processor.process(data)
+                if (message.data === "v1") return
+
+                // let data = JSON.parse(message.data)
+                const list = processor.process(message.data)
                 console.log(`datas: ${list}`)
+                onChatState(list)
             } catch (error) {
-                // console.log(error)
+                console.log(error)
+                onChatState(Error("error"))
             }
     }
 
@@ -65,7 +70,7 @@ export const sendChat = async (
         onStreaming
     )
     if (chatStream instanceof Error) {
-
+        onChatState(chatStream)
+        return 
     }
-    console.log(chatStream)
 }

@@ -1,4 +1,4 @@
-import { MessageRequest } from "@/_chatgpt/domain/model/ConversationRequest";
+import { Message } from "@/_chatgpt/domain/entity/Message";
 
-export type ChatState = MessageRequest| Error
+export type ChatState = Message[]| Error
 
