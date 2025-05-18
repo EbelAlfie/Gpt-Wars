@@ -1,8 +1,10 @@
 import { ChatGptRepository } from "@/_chatgpt/data/ChatGptRepository";
 import { ChatRequirementRequest } from "./model/ChatRequirementRequest";
-import { ConversationRequest } from "./model/ConversationRequest";
-import { decoder, HD } from "@/_chatgpt/data/utilChatGpt";
+import { ConversationRequest, MessageRequest } from "./model/ConversationRequest";
+import { constructTurnsTileToken, decoder, getEnforcementToken, HD } from "@/_chatgpt/data/utilChatGpt";
 import { ServerEvent } from "./entity/ServerEvent";
+import { ChatRequirementResponse } from "../data/model/ChatRequirementResponse";
+import { CompletionType } from "@/common/Constants";
 
 export class ChatGptUseCase {
     repository: ChatGptRepository = new ChatGptRepository()
@@ -22,7 +24,31 @@ export class ChatGptUseCase {
         })
     }
 
-    async openConversation(request: ConversationRequest, onStreaming: (value: ServerEvent) => void) {
+    async openConversation(request: MessageRequest, requirement: ChatRequirementResponse, lastChat: string|undefined, onStreaming: (value: ServerEvent) => void) {
+        const turntileToken = await constructTurnsTileToken(requirement.turnstile.dx)
+        const proofToken = getEnforcementToken(requirement)
+
+        const parentMessageId = lastChat ?? crypto.randomUUID()
+        const conversationRequest = {
+            chatRequirementToken: requirement.token,
+            turnstileToken: turntileToken,
+            proofToken: proofToken ?? "",
+            requestBody: {
+                    action: CompletionType.Next,
+                    messages: [request],
+                    parent_message_id: parentMessageId,
+                    model:"auto",
+                    timezone_offset_min:-420,
+                    timezone:"Asia/Jakarta",
+                    suggestions:[],
+                    conversation_mode:{"kind":"primary_assistant"},
+                    system_hints:[],
+                    supports_buffering:true,
+                    supported_encodings:["v1"],
+                    client_contextual_info:{"is_dark_mode":true,"time_since_loaded":146,"page_height":968,"page_width":489,"pixel_ratio":1,"screen_height":1080,"screen_width":1920},
+                    paragen_cot_summary_display_override:"allow"
+            }
+        }
         return this.repository.openConversation(request)
             .then((responseStream: ReadableStream) => {
                 this._streamProcessor(responseStream, HD(decoder(

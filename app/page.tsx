@@ -1,7 +1,7 @@
 "use client"
 import { useMemo } from "react";
 import { ChatRoom } from "./components/ChatRoom";
-import { ViewModel } from "./hook/ViewModel";
+import { ViewModel } from "../_chatgpt/presentation/hook/ViewModel";
 import { ChatGptUseCase } from "@/_chatgpt/domain/ChatGptUseCase";
 
 export default function ChatPage() {
