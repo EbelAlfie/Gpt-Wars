@@ -2,10 +2,9 @@
 import { constructTurnsTileToken, getEnforcementToken, getRequirementsToken } from "@/_chatgpt/data/utilChatGpt";
 import { ChatGptUseCase } from "@/_chatgpt/domain/ChatGptUseCase";
 import { createMessage } from "../utils/utils";
-import { CompletionType, OperationTypes, Role } from "@/common/Constants";
-import { MessageRequest } from "@/_chatgpt/domain/model/ConversationRequest";
+import { CompletionType, Role } from "@/common/Constants";
 import { Message } from "@/_chatgpt/domain/entity/Message";
-import { ServerData, ServerEvent } from "@/_chatgpt/domain/entity/ServerEvent";
+import { ServerEvent } from "@/_chatgpt/domain/entity/ServerEvent";
 import { ChatState } from "../components/state/ChatState";
 import { GptMessageProcessor } from "../../_chatgpt/presentation/GptMessageProcessor";
 
@@ -44,7 +43,7 @@ export const sendChat = async (
     const turntileToken = await constructTurnsTileToken(chatRequirement.turnstile.dx)
     const proofToken = getEnforcementToken(chatRequirement)
 
-    const parentMessageId = lastChat?.id ?? "aaa15024-086f-4f9b-9ed9-7a4aeddaf679"
+    const parentMessageId = lastChat?.id ?? crypto.randomUUID()
     const messageRequest = createMessage(Role.User, message)
 
     const chatStream = await useCase.openConversation({
