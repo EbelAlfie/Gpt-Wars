@@ -1,11 +1,6 @@
+import { Message } from "@/app/chat/_model/Message";
 import { MessageRequest } from "../model/ConversationRequest";
 import { ServerData } from "./ServerEvent";
-
-export type Message = {
-    id: string,
-    author: string,
-    content: string,
-}
 
 export function mapToMessage(response: MessageRequest) : Message {
     return {
@@ -17,7 +12,7 @@ export function mapToMessage(response: MessageRequest) : Message {
 
 /**Either construct a message Object or get the raw Value */
 export function mapServerDataToMessage(data: ServerData) : Message {
-    let message 
+    let message
     try {
         console.log("data.value")
         console.log(data.value)

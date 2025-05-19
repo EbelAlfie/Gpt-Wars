@@ -49,7 +49,7 @@ export class ChatGptUseCase {
                     paragen_cot_summary_display_override:"allow"
             }
         }
-        return this.repository.openConversation(request)
+        return this.repository.openConversation(conversationRequest)
             .then((responseStream: ReadableStream) => {
                 this._streamProcessor(responseStream, HD(decoder(
                     (message: ServerEvent) => {

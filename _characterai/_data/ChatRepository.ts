@@ -1,6 +1,7 @@
+import { discoverCharacter, fetchRecentChat, loadChatHistory, resurrectCharacter } from "../action/ChatAction"
+import { CharacterResponse } from "./model/CharacterResponse"
 import { RecentChatResponse } from "./model/RecentChatResponse"
 import { TurnResponse } from "./model/TurnResponse"
-import { fetchRecentChat, loadChatHistory, resurrectCharacter } from "@/app/_characterai/action/ChatAction"
 
 export class ChatRepository {
     webSocket: WebSocket | null = null
@@ -42,6 +43,12 @@ export class ChatRepository {
     public async loadChatHistory(chatId: string): Promise<TurnResponse> {
         return loadChatHistory(chatId, this.token)
             .then((response: TurnResponse) => {
+                return response
+            })
+    }
+    public async discoverAll(): Promise<CharacterResponse> {
+        return discoverCharacter()
+            .then((response: CharacterResponse) => {
                 return response
             })
     }

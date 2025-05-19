@@ -3,9 +3,9 @@ import { getRequirementsToken } from "@/_chatgpt/data/utilChatGpt";
 import { ChatGptUseCase } from "@/_chatgpt/domain/ChatGptUseCase";
 import { createMessage } from "../../../app/utils/utils";
 import { Role } from "@/common/Constants";
-import { Message } from "@/_chatgpt/domain/entity/Message";
+import { Message } from "@/app/chat/_model/Message";
 import { ServerEvent } from "@/_chatgpt/domain/entity/ServerEvent";
-import { ChatState } from "../../../app/components/state/ChatState";
+import { ChatState } from "../../../app/chat/components/state/ChatState";
 import { GptMessageProcessor } from "../GptMessageProcessor";
 
 const processor = new GptMessageProcessor()

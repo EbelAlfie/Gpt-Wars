@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react"
-import { sendChat } from "../../_chatgpt/presentation/hook/useChat"
+import { sendChat } from "../../../_chatgpt/presentation/hook/useChat"
 import { ChatList } from "./ChatList"
-import { ViewModel } from "../../_chatgpt/presentation/hook/ViewModel"
+import { ViewModel } from "../../../_chatgpt/presentation/hook/ViewModel"
 import { ChatFooter } from "./ChatFooter"
-import { Message } from "@/_chatgpt/domain/entity/Message"
+import { Message } from "@/_chatgpt/domain/entity/MessageMapper"
 
 export const ChatRoom = () => {
     const useCase = useContext(ViewModel)

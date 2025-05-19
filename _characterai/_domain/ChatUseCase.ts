@@ -1,8 +1,9 @@
-import { ChatRepository } from "@/app/_characterai/_data/ChatRepository";
 import { mapRecentChat, RecentChatModel } from "./response_model/RecentChat";
 import { ChatTurnHistory, mapTurnHistory, parseTurn } from "./response_model/ChatTurnHistory";
-import { ChatEventType } from "@/app/global/ConstEnum";
 import { getRequestId } from "../utils";
+import { ChatRepository } from "../_data/ChatRepository";
+import { ChatEventType } from "../common/Const";
+import { mapCharacterModel } from "./mapper/CharacterMapper";
 
 export class ChatUseCase {
     userId = "58584831"
@@ -36,6 +37,16 @@ export class ChatUseCase {
             })
     }
 
+    public async discoverCharacter() {
+        return this.repository.discoverAll()
+        .then(response => mapCharacterModel(response))
+        .catch(error => {
+            console.log(error)
+            return error
+        })
+    }
+
+    /**WebSocket */
     public openWebsocketConnection() {
         this.repository.openChatConnection()
     }
