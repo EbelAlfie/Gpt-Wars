@@ -1,16 +1,17 @@
 "use client"
 
-import { ViewModel } from "@/_chatgpt/presentation/hook/ViewModel";
 import { CharacterListScreen } from "./components/CharacterListScreen";
 import { SearchBar } from "./components/SearchBar";
 import { useMemo } from "react";
-import { ChatGptUseCase } from "@/_chatgpt/domain/ChatGptUseCase";
+import { UseCase } from "./hooks/usecaseContext";
+import { ChatUseCase } from "@/_characterai/_domain/ChatUseCase";
+import "./globals.css";
 
 export default function HomePage () {
-    const useCase = useMemo(() => new ChatGptUseCase(), []) 
+    const useCase = useMemo(() => new ChatUseCase(), []) 
 
     return (
-        <ViewModel.Provider value = {useCase}>
+        <UseCase.Provider value = {useCase}>
             <main className="h-full w-full">
                 <section className="w-full">
                     <SearchBar />
@@ -19,6 +20,6 @@ export default function HomePage () {
                     <CharacterListScreen />
                 </section>
             </main>
-        </ViewModel.Provider>
+        </UseCase.Provider>
     )
 }

@@ -4,6 +4,8 @@ import { getRequestId } from "../utils";
 import { ChatRepository } from "../_data/ChatRepository";
 import { ChatEventType } from "../common/Const";
 import { mapCharacterModel } from "./mapper/CharacterMapper";
+import { CharacterModel } from "./response_model/CharacterModel";
+import { CharacterResponse } from "../_data/model/CharacterResponse";
 
 export class ChatUseCase {
     userId = "58584831"
@@ -37,13 +39,13 @@ export class ChatUseCase {
             })
     }
 
-    public async discoverCharacter() {
+    public async discoverCharacter(): Promise<CharacterModel[]> {
         return this.repository.discoverAll()
-        .then(response => mapCharacterModel(response))
-        .catch(error => {
-            console.log(error)
-            return error
-        })
+            .then((response : CharacterResponse) => mapCharacterModel(response))
+            .catch(error => {
+                console.log(error)
+                return error
+            })
     }
 
     /**WebSocket */

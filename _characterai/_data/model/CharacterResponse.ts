@@ -1,13 +1,24 @@
-export type CharacterResponse = {
-    result: {
-        data: {
-            json: {
+export type CharacterResponse = Array<{
+    result?: {
+        data?: {
+            json?: {
                 status: string,
-                character: ResultResponse
+                character?: ResultResponse
+            }
+        }
+    },
+    error?: {
+        json?: {
+            message?: string,
+            code?: number,
+            data?: {
+                code?: string,
+                httpStatus?: number,
+                path?: string
             }
         }
     }
-}
+}>
 
 export type ResultResponse = {
     external_id: string,

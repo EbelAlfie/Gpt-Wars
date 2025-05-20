@@ -1,5 +1,7 @@
 import { CharacterModel } from "@/_characterai/_domain/response_model/CharacterModel";
 import { useCharacter } from "@/_characterai/hook/useCharacters"
+import { CharacterItem } from "./CharacterItem";
+import { useMemo } from "react";
 
 export const CharacterListScreen = () => {
     const characters = useCharacter()
@@ -20,19 +22,28 @@ export const CharacterListScreen = () => {
 }
 
 const CharacterListContent = ({characters}: { characters: CharacterModel[] }) => {
-    return <ul className="">
+    const item = useMemo(() => 
+        characters.map(character => <CharacterItem character={character} />), 
+        [characters]
+    )
 
+    return <ul className="w-full h-full bg-slate-700">
+        {item}
     </ul>
 }
 
 const LoadingContent = () => {
     return (
-        <div></div>
+        <div>
+            Loading
+        </div>
     )
 } 
 
 const ErrorContent = ({error}: { error: Error }) => {
     return (
-        <div></div>
+        <div>
+            <p>{error.message}</p>
+        </div>
     )
 }
