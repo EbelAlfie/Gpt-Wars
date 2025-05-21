@@ -1,7 +1,7 @@
 import { CharacterModel } from "@/_characterai/_domain/response_model/CharacterModel";
 import { useCharacter } from "@/_characterai/hook/useCharacters"
 import { CharacterItem } from "./CharacterItem";
-import { useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 export const CharacterListScreen = () => {
     const characters = useCharacter()
@@ -22,12 +22,32 @@ export const CharacterListScreen = () => {
 }
 
 const CharacterListContent = ({characters}: { characters: CharacterModel[] }) => {
-    const item = useMemo(() => 
-        characters.map(character => <CharacterItem character={character} />), 
-        [characters]
+    const [selectedChar, setSelected] = useState(new Array<number>(2))
+
+    const onCharacterSelected = useCallback((index: number) => {
+        let list: Array<number> = selectedChar 
+        const pos = list.find((value) => value === index)
+        if (pos !== undefined) return 
+
+        if (list.length >= 2) list.shift()
+        list.push(index)
+    
+        setSelected(Array(...list))
+    }, [])
+
+    const item = useMemo(() => //TODO temporary
+        characters.map((character, index) => 
+            <CharacterItem 
+                character={character} 
+                selected={selectedChar.find(value => value === index) !== undefined}
+                key={index}
+                onSelected ={() => onCharacterSelected(index)}
+            />
+        ), 
+        [characters, selectedChar]
     )
 
-    return <ul className="w-full h-full bg-slate-700">
+    return <ul className="grid grid-cols-5 gap-4 w-full h-full max-w-full bg-slate-700 p-6">
         {item}
     </ul>
 }
