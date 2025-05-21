@@ -47,14 +47,14 @@ const CharacterListContent = ({characters}: { characters: CharacterModel[] }) =>
         [characters, selectedChar]
     )
 
-    return <ul className="grid grid-cols-5 gap-4 w-full h-full max-w-full bg-slate-700 p-6">
+    return <ul className="grid grid-cols-5 gap-4 w-auto h-full max-w-full bg-slate-700 p-6">
         {item}
     </ul>
 }
 
 const LoadingContent = () => {
     return (
-        <div>
+        <div className="w-auto">
             Loading
         </div>
     )
@@ -62,7 +62,7 @@ const LoadingContent = () => {
 
 const ErrorContent = ({error}: { error: Error }) => {
     return (
-        <div>
+        <div className="w-auto">
             <p>{error.message}</p>
         </div>
     )

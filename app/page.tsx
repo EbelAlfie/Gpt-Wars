@@ -2,22 +2,29 @@
 
 import { CharacterListScreen } from "./components/CharacterListScreen";
 import { SearchBar } from "./components/SearchBar";
-import { useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { UseCase } from "./hooks/usecaseContext";
 import { ChatUseCase } from "@/_characterai/_domain/ChatUseCase";
+import { FightButton } from "./components/FightButton";
 import "./globals.css";
 
 export default function HomePage () {
     const useCase = useMemo(() => new ChatUseCase(), []) 
+    const [querytext, setText] = useState("")
+
+    const onFightClicked = useCallback(() => {}, [])
 
     return (
         <UseCase.Provider value = {useCase}>
             <main className="h-full w-full">
-                <section className="w-full">
-                    <SearchBar />
+                <section className="w-full flex flex-row items-center">
+                    <SearchBar className="self-center" query={querytext} onTextChanged={setText}/>
                 </section>
-                <section className="w-full">
+                <section>
                     <CharacterListScreen />
+                </section>
+                <section className="p-2">
+                    <FightButton onClick={onFightClicked}/>
                 </section>
             </main>
         </UseCase.Provider>

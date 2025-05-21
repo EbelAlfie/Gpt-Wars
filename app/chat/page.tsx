@@ -5,6 +5,7 @@ import { ViewModel } from "../../_chatgpt/presentation/hook/ViewModel";
 import { ChatGptUseCase } from "@/_chatgpt/domain/ChatGptUseCase";
 
 export default function ChatPage() {
+  const players = useMemo(() => {}, [])
   const useCase = useMemo(() => new ChatGptUseCase(), []) 
 
   return (
