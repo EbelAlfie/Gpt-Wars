@@ -1,5 +1,6 @@
-import { discoverCharacter, fetchRecentChat, loadChatHistory, resurrectCharacter } from "../action/ChatAction"
+import { discoverCharacter, fetchRecentChat, getCharacterInfo, loadChatHistory, resurrectCharacter } from "../action/ChatAction"
 import { CharacterResponse } from "./model/CharacterResponse"
+import { CharacterDetailResponse } from "./model/DetailResponse"
 import { RecentChatResponse } from "./model/RecentChatResponse"
 import { TurnResponse } from "./model/TurnResponse"
 
@@ -51,5 +52,10 @@ export class ChatRepository {
             .then((response: CharacterResponse) => {
                 return response
             })
+    }
+
+    public async getCharacterInfo(charId: string): Promise<CharacterDetailResponse> {
+        return getCharacterInfo(charId, this.token)
+            .then(response => response)
     }
 }
