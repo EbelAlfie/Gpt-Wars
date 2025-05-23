@@ -48,8 +48,14 @@ export const ChatRoom = () => {
                 chats={chatList}
             /> */}
             {players.type === "loaded" && <div className="flex flex-row w-full">
-                <VsAvatar src={players.data[0].avatarFileName}/>
-                <VsAvatar src={players.data[1].avatarFileName}/>
+                <VsAvatar 
+                    className="player-one-mask"
+                    src={players.data[0].avatarFileName}
+                />
+                <VsAvatar 
+                    className="player-two-mask" 
+                    src={players.data[1].avatarFileName}
+                />
             </div>}
             <div className={`absolute top-1/4 flex flex-col p-5 w-full h-fit items-center transition-all ${inputVisibility}`}>
                 <h1 className="text-4xl mb-8">Trigger Debate</h1>
