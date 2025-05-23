@@ -58,7 +58,11 @@ export async function getCharacterInfo(charId: string, token: string|undefined):
         method: "POST",
         url: "https://neo.character.ai/character/v1/get_character_info",
         headers: {
-            'authorization': `Token ${token}`
+            'authorization': `Token ${token}`,
+            'accept-language': 'en-US,en;q=0.9,id;q=0.8',
+            'User-Agent': "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36 Edg/135.0.0.0",
+            'Host': "neo.character.ai",
+            'Content-Length': 73
         },
         data: {
             external_id: charId,

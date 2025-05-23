@@ -1,4 +1,4 @@
-import { CandidatesResponse, TurnHistoryResponse, TurnResponse } from "@/app/_characterai/_data/model/TurnResponse"
+import { CandidatesResponse, TurnHistoryResponse, TurnResponse } from "@/_characterai/_data/model/TurnResponse"
 
 export type ChatTurnHistory = {
     readonly turnKey: TurnKey,

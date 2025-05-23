@@ -1,4 +1,4 @@
-import { CharacterModel } from "@/_characterai/_domain/response_model/CharacterModel";
+import { CharacterItemModel } from "@/_characterai/_domain/response_model/CharacterItemModel";
 import { useCharacter } from "@/_characterai/hook/useCharacters"
 import { CharacterItem } from "./CharacterItem";
 import { useCallback, useMemo, useState } from "react";
@@ -21,7 +21,7 @@ export const CharacterListScreen = () => {
     return layout
 }
 
-const CharacterListContent = ({characters}: { characters: CharacterModel[] }) => {
+const CharacterListContent = ({characters}: { characters: CharacterItemModel[] }) => {
     const [selectedChar, setSelected] = useState(new Array<number>(2))
 
     const onCharacterSelected = useCallback((index: number) => {

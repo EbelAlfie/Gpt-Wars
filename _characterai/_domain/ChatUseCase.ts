@@ -3,8 +3,8 @@ import { ChatTurnHistory, mapTurnHistory, parseTurn } from "./response_model/Cha
 import { getRequestId } from "../utils";
 import { ChatRepository } from "../_data/ChatRepository";
 import { ChatEventType } from "../common/Const";
-import { mapCharacterModel } from "./mapper/CharacterMapper";
-import { CharacterModel } from "./response_model/CharacterModel";
+import { mapCharacterItemModel, mapCharacterModel } from "./mapper/CharacterMapper";
+import { CharacterItemModel } from "./response_model/CharacterItemModel";
 import { CharacterResponse } from "../_data/model/CharacterResponse";
 
 export class ChatUseCase {
@@ -39,9 +39,18 @@ export class ChatUseCase {
             })
     }
 
-    public async discoverCharacter(): Promise<CharacterModel[]> {
+    public async discoverCharacter(): Promise<CharacterItemModel[]> {
         return this.repository.discoverAll()
-            .then((response : CharacterResponse) => mapCharacterModel(response))
+            .then((response : CharacterResponse) => mapCharacterItemModel(response))
+            .catch(error => {
+                console.log(error)
+                return error
+            })
+    }
+
+    public async getCharacterInfo(charId: string) {
+        return this.repository.getCharacterInfo(charId)
+            .then(response => mapCharacterModel(response))
             .catch(error => {
                 console.log(error)
                 return error

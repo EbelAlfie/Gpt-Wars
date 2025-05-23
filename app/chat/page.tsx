@@ -1,19 +1,16 @@
 "use client"
 import { useMemo } from "react";
 import { ChatRoom } from "./components/ChatRoom";
-import { ViewModel } from "../../_chatgpt/presentation/hook/ViewModel";
-import { ChatGptUseCase } from "@/_chatgpt/domain/ChatGptUseCase";
+import { ChatUseCase } from "@/_characterai/_domain/ChatUseCase";
+import { UseCase } from "../hooks/usecaseContext";
+import "../globals.css";
 
 export default function ChatPage() {
-  const players = useMemo(() => new window.URLSearchParams(window.location.href), [])
-
-  const p1 = players.get("p1")
-  const p2 = players.get("p2")
-  const useCase = useMemo(() => new ChatGptUseCase(), []) 
+  const useCase = useMemo(() => new ChatUseCase(), []) 
 
   return (
-    <ViewModel.Provider value={useCase}>
+    <UseCase.Provider value={useCase}>
       <ChatRoom />
-    </ViewModel.Provider>
+    </UseCase.Provider>
   )
 }

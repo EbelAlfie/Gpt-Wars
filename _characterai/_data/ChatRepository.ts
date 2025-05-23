@@ -55,7 +55,16 @@ export class ChatRepository {
     }
 
     public async getCharacterInfo(charId: string): Promise<CharacterDetailResponse> {
+        console.log("Query")
         return getCharacterInfo(charId, this.token)
-            .then(response => response)
+            .then((response: CharacterDetailResponse) => {
+                console.log("response")
+                console.log(response)
+                return response
+            })
+            .catch(error => {
+                console.log("ERROR")
+                return error
+            })
     }
 }

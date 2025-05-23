@@ -1,9 +1,9 @@
 import { Failed, Loaded, Loading, setError, setLoaded, setLoading } from "@/app/common/UiState"
 import { useContext, useEffect, useState } from "react"
-import { CharacterModel } from "../_domain/response_model/CharacterModel"
+import { CharacterItemModel } from "../_domain/response_model/CharacterItemModel"
 import { UseCase } from "@/app/hooks/usecaseContext"
 
-export type CharacterState = Loading | Loaded<CharacterModel[]> | Failed
+export type CharacterState = Loading | Loaded<CharacterItemModel[]> | Failed
 
 export const useCharacter = () => {
     const useCase = useContext(UseCase)

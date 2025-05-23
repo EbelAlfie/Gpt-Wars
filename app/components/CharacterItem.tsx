@@ -1,8 +1,8 @@
-import { CharacterModel } from "@/_characterai/_domain/response_model/CharacterModel"
+import { CharacterItemModel } from "@/_characterai/_domain/response_model/CharacterItemModel"
 import { useMemo } from "react"
 
 type CharacterItemProp = { 
-    character: CharacterModel, 
+    character: CharacterItemModel, 
     selected: boolean,
     onSelected: () => void 
 }
