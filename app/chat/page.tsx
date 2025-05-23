@@ -1,8 +1,8 @@
 "use client"
 import { useMemo } from "react";
-import { ChatRoom } from "./components/ChatRoom";
 import { ChatUseCase } from "@/_characterai/_domain/ChatUseCase";
 import { UseCase } from "../hooks/usecaseContext";
+import { ChatRoom } from "./components/ChatRoom";
 import "../globals.css";
 
 export default function ChatPage() {

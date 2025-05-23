@@ -18,10 +18,7 @@ export const usePlayer = (player1: string| null, player2: string| null) => {
                 return 
             }
 
-            console.log("BEFORE")
             const firstPlayer = await useCase.getCharacterInfo(player1)
-            console.log("after")
-            console.log(firstPlayer)
             if (firstPlayer instanceof Error) {
                 setPlayers(setError(firstPlayer))
                 return 

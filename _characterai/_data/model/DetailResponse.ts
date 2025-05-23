@@ -1,3 +1,8 @@
+export type DetailResponse = {
+    character: CharacterDetailResponse,
+    status: string
+}
+
 export type CharacterDetailResponse = {
     external_id: string,
     title: string,

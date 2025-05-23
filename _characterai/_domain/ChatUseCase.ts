@@ -6,6 +6,7 @@ import { ChatEventType } from "../common/Const";
 import { mapCharacterItemModel, mapCharacterModel } from "./mapper/CharacterMapper";
 import { CharacterItemModel } from "./response_model/CharacterItemModel";
 import { CharacterResponse } from "../_data/model/CharacterResponse";
+import { DetailResponse } from "../_data/model/DetailResponse";
 
 export class ChatUseCase {
     userId = "58584831"
@@ -50,7 +51,7 @@ export class ChatUseCase {
 
     public async getCharacterInfo(charId: string) {
         return this.repository.getCharacterInfo(charId)
-            .then(response => mapCharacterModel(response))
+            .then((response: DetailResponse) => mapCharacterModel(response.character))
             .catch(error => {
                 console.log(error)
                 return error

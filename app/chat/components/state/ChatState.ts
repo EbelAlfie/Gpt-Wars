@@ -1,4 +1,4 @@
-import { Message } from "@/_chatgpt/domain/entity/MessageMapper";
+import { Message } from "../../_model/Message";
 
 export type ChatState = Message[]| Error
 

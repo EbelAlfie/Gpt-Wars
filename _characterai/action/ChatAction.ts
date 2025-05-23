@@ -3,7 +3,7 @@ import axios, { AxiosResponse } from "axios";
 import { TurnResponse } from "../_data/model/TurnResponse";
 import { RecentChatResponse } from "../_data/model/RecentChatResponse";
 import { CharacterResponse } from "../_data/model/CharacterResponse";
-import { CharacterDetailResponse } from "../_data/model/DetailResponse";
+import { CharacterDetailResponse, DetailResponse } from "../_data/model/DetailResponse";
 
 export async function resurrectCharacter(chatId: string, token: string|undefined) {
     const config = {
@@ -53,23 +53,39 @@ export async function discoverCharacter() {
         .then(response => response.data)
 }
 
-export async function getCharacterInfo(charId: string, token: string|undefined): Promise<CharacterDetailResponse> {
+export async function getCharacterInfo(charId: string, token: string|undefined): Promise<DetailResponse> {
     const config = {
-        method: "POST",
-        url: "https://neo.character.ai/character/v1/get_character_info",
-        headers: {
-            'authorization': `Token ${token}`,
-            'accept-language': 'en-US,en;q=0.9,id;q=0.8',
-            'User-Agent': "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36 Edg/135.0.0.0",
-            'Host': "neo.character.ai",
-            'Content-Length': 73
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'https://neo.character.ai/character/v1/get_character_info',
+        headers: { 
+            'accept-language': 'en-US,en;q=0.9,id;q=0.8', 
+            'Authorization': `Token ${token}`,
+            'origin': 'https://character.ai', 
+            'priority': 'u=1, i', 
+            'referer': 'https://character.ai/', 
+            'sec-ch-ua': '"Microsoft Edge";v="135", "Not-A.Brand";v="8", "Chromium";v="135"', 
+            'sec-ch-ua-mobile': '?0', 
+            'sec-ch-ua-platform': '"Linux"', 
+            'sec-fetch-dest': 'empty', 
+            'sec-fetch-mode': 'cors', 
+            'sec-fetch-site': 'same-site', 
+            'Content-Type': 'application/json', 
         },
         data: {
-            external_id: charId,
-            lang: "en"
+            "external_id": charId,
+            "lang": "en"
         }
     }
 
     return await axios.request<any, AxiosResponse<CharacterDetailResponse>, any>(config)
-        .then(response => response.data)
+        .then(response => { 
+            console.log(response.headers)
+            return response.data
+        })
+        .catch(error => {
+            console.log(error.request)
+            console.log("Error")
+            return error
+        })
 }
