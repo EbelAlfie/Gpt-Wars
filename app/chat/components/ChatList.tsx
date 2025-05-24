@@ -10,8 +10,10 @@ export const ChatList = ({...props}: ChatListProps) => {
         <ChatBubble key={chat.id} text={chat.content}/>
     )
     return <>
-        <ul className="w-screen flex-grow">
-            {chatBubbles}
-        </ul>
+        <div className="absolute top-1/4 left-1/4 w-1/2 h-1/2 rounded-xl border border-white p-8 bg-slate-800">
+            <ul className="w-full flex-grow">
+                {chatBubbles}
+            </ul>
+        </div>
     </>
 }
