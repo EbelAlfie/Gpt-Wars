@@ -1,10 +1,7 @@
-import { useCallback, useContext, useEffect, useRef, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { Failed, Loaded, Loading, setError, setLoaded, setLoading } from "../common/UiState"
 import { CharacterModel } from "@/_characterai/_domain/response_model/CharacterModel"
 import { UseCase } from "./usecaseContext"
-import { RecentChatModel } from "@/_characterai/_domain/response_model/RecentChat"
-import { ChatTurnHistory } from "@/_characterai/_domain/response_model/ChatTurnHistory"
-import { CommandType } from "@/_characterai/common/Const"
 
 export type PlayersState = Loading | Loaded<CharacterModel[]> | Failed 
 

@@ -17,7 +17,7 @@ type ChatListProps = {
 
 export const ChatListScreen = ({state, listState}: { state: ChatState, listState: ChatRoomUiState }) => {
     const animation = useMemo(() => state.type === "open" ? "show-chat" : "hide-chat", [state])
-    return <div className={`transition-all ${animation}`}>
+    return <div className={`absolute top-1/4 left-1/4 w-1/2 h-1/2 transition-all ${animation}`}>
         {state.type === "open" &&
             <ChatList
                 modMessage={state.modMessage}
@@ -27,16 +27,19 @@ export const ChatListScreen = ({state, listState}: { state: ChatState, listState
     </div>
 }
 
-export const ChatList = ({...props}: ChatListProps) => { 
+export const ChatList = ({...props}: ChatListProps) => {
     switch(props.chatState.type) {
         case "loaded": {
             const chatBubbles = props.chatState.data.chatList.map(chat => 
-                <ChatBubble key={chat.turnId} text={chat.message}/>
+                <ChatBubble 
+                    key={chat.turnId} 
+                    message={chat}
+                />
             )
             return <>
-                <div className="absolute top-1/4 left-1/4 w-1/2 h-1/2 rounded-xl border border-white p-8 bg-slate-800">
+                <div className="flex flex-col rounded-xl border border-white p-8 bg-slate-800">
                     <ModeratorBubble message={props.modMessage}/>
-                    <ul className="w-full flex-grow">
+                    <ul className="flex flex-col gap-3 w-full flex-grow mt-5">
                         {chatBubbles}
                     </ul>
                 </div>

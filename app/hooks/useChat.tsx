@@ -7,7 +7,10 @@ import { ChatListModel, ChatRoomUiState } from "../chat/_model/ChatRoomUiState";
 import { setError, setLoaded, setLoading } from "../common/UiState";
 import { CommandType } from "@/_characterai/common/Const";
 
-export const useChat = (playerState: PlayersState) => {
+export const useChat = (
+    playerState: PlayersState,
+    onFinalMessage: (chat: ChatListModel) => void
+) => {
     const useCase = useContext(UseCase)
 
     const [chatListState, updateState] = useState<ChatRoomUiState>(setLoading())
@@ -20,7 +23,7 @@ export const useChat = (playerState: PlayersState) => {
         updateState(setLoading())
 
         useCase.registerOpenListener(() => {
-            // updateState(setLoaded()) TODO
+            updateState(setLoaded({chatList: []}))
         })
 
         useCase.registerErrorListener((message: Event) => {
@@ -30,25 +33,24 @@ export const useChat = (playerState: PlayersState) => {
         useCase.registerMessageListener((turn: ChatTurnHistory, command: string) => {
             const currentState = uiStateRef.current
             if (currentState.type !== "loaded") return 
+            if (turn.author.isHuman) return 
 
-            const isCharMessage = 
-                turn.author.authorId === talkingId
-            
             const uiState =  currentState.data
 
             const newMessage: ChatListModel = {
                 turnId: turn.turnKey.turnId,
                 message: turn.candidates[0]?.rawContent,
                 author: turn.author,
-                authorAvatar: isCharMessage ? uiState.metadata.characterAvatar : "",
+                authorAvatar: "",
                 createTime: turn.createTime
             };
-            
+
             const newList = uiState.chatList
+            let currentPosition = 0
 
             switch(command) {
                 case CommandType.ADD : {
-                    newList.push(newMessage)
+                    currentPosition = newList.push(newMessage)
                     
                     uiState.chatList = newList
                     updateState(setLoaded(uiState))
@@ -58,13 +60,19 @@ export const useChat = (playerState: PlayersState) => {
                     const updateIndex = newList.findIndex(item => 
                         item.turnId === newMessage.turnId
                     )  
-                    if (updateIndex > -1) newList[updateIndex] = newMessage
+
+                    if (updateIndex > -1) {
+                        currentPosition = updateIndex
+                        newList[updateIndex] = newMessage
+                    }
 
                     uiState.chatList = newList
                     updateState(setLoaded(uiState))
                     break
                 }
             }
+
+            if (turn.candidates[0].isFinal) onFinalMessage(newList[currentPosition])
         })
 
         useCase.openWebsocketConnection()
