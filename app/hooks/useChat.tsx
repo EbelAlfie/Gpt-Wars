@@ -72,7 +72,8 @@ export const useChat = (
                 }
             }
 
-            if (turn.candidates[0].isFinal) onFinalMessage(newList[currentPosition])
+            if (turn.candidates[0].isFinal) 
+                onFinalMessage(newList[currentPosition])
         })
 
         useCase.openWebsocketConnection()

@@ -19,12 +19,10 @@ export const ChatRoom = () => {
 
     const sendMessage = async (text: string, recipientId: string|null) => {
         if (!recipientId || recipientId === "") return 
-
         const recentChat = await useCase.fetchRecentChat(recipientId)
         if (recentChat instanceof Error) {
             return 
         }
-        
         useCase.sendMessage(recentChat.chatId, recipientId, text)
     }
 
@@ -36,7 +34,7 @@ export const ChatRoom = () => {
     )
     
     return <>
-        <main className="h-full w-full flex flex-col">
+        <main className="h-full w-full flex flex-col overflow-hidden">
             <ChatListScreen 
                 state={chatViewState}
                 listState={chatState}

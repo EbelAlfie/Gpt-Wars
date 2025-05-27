@@ -2,7 +2,7 @@ import { PlayersState } from "@/app/hooks/usePlayer"
 
 export const VsBackground = ({state}: {state: PlayersState}) => {
     return <>
-        {state.type === "loaded" && <div className="flex flex-row w-full">
+        {state.type === "loaded" && <div className="flex flex-row w-full overflow-hidden">
                 <VsAvatar 
                     className="player-one-mask"
                     src={state.data[0].avatarFileName}
