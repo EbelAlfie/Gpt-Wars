@@ -1,9 +1,8 @@
 import { useContext, useMemo, useState } from "react"
-import { Message } from "../_model/Message"
-import { ChatList, ChatListScreen } from "./ChatList"
+import { ChatListScreen, ChatState } from "./ChatList"
 import { usePlayer } from "@/app/hooks/usePlayer"
 import { useSearchParams } from "next/navigation"
-import { VsAvatar } from "./VsAvatar"
+import { VsBackground } from "./VsAvatar"
 import { ChatTrigger } from "./ChatTrigger"
 import { UseCase } from "@/app/hooks/usecaseContext"
 import { useChat } from "@/app/hooks/useChat"
@@ -17,12 +16,12 @@ export const ChatRoom = () => {
     const p2 = useMemo(() => playersId.get("p2"), [])
     
     const players = usePlayer(p1, p2)
-    
-    const [inputVisible, setInputVisibility] = useState(true)    
-    const [chatListVisible, setChatVisibility] = useState(false)
-    
+
     const chatState = useChat(players)
 
+    const [inputVisible, setInputVisibility] = useState(true)    
+    const [chatViewState, setChatVisibility] = useState<ChatState>({ type: "close" })
+    
     const onFirstMessageSend = async (text: string) => {
         if (!p1 || p1 === "" || !p2 || p2 === "") return 
 
@@ -38,27 +37,20 @@ export const ChatRoom = () => {
 
         // useCase.sendMessage(chatRoomId, p1, text)
         setInputVisibility(false)
-        setChatVisibility(true)
+        setChatVisibility({ 
+            type: "open",
+            modMessage: text
+        })
     }
     
     return <>
         <main className="h-full w-full flex flex-col">
             <ChatListScreen 
-                visible={chatListVisible}
-                state={chatState}
+                state={chatViewState}
+                listState={chatState}
             />
             
-            {players.type === "loaded" && <div className="flex flex-row w-full">
-                    <VsAvatar 
-                        className="player-one-mask"
-                        src={players.data[0].avatarFileName}
-                    />
-                    <VsAvatar 
-                        className="player-two-mask" 
-                        src={players.data[1].avatarFileName}
-                    />
-                </div>
-            }
+            <VsBackground state={players}/>
             
             <ChatTrigger
                 visible = {inputVisible}

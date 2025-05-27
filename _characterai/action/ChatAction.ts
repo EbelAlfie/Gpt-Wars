@@ -60,7 +60,7 @@ export async function getCharacterInfo(charId: string, token: string|undefined):
         url: 'https://neo.character.ai/character/v1/get_character_info',
         headers: { 
             'accept-language': 'en-US,en;q=0.9,id;q=0.8', 
-            'Authorization': `Token ${token}`,
+            'authorization': `Token ${token}`, 
             'origin': 'https://character.ai', 
             'priority': 'u=1, i', 
             'referer': 'https://character.ai/', 
