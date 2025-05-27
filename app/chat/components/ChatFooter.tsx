@@ -20,6 +20,7 @@ export const ChatBox = ({...props}: ChatFooterProps) => {
     }
 
     const onSendPressed = () => {
+        if (textValue === "") return
         props.onSend(textValue)
     }
 

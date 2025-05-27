@@ -10,3 +10,9 @@ export const ChatBubble = (props: ChatBubbleProps) => {
         </li>
     </>
 }
+
+export const ModeratorBubble = ({message}: {message: string}) => {
+    return <div>
+        <p>{message}</p>
+    </div>
+}
