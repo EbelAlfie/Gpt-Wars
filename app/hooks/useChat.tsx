@@ -1,4 +1,3 @@
-import { ChatUseCase } from "@/_characterai/_domain/ChatUseCase";
 import { useContext, useEffect, useRef, useState } from "react";
 import { PlayersState } from "./usePlayer";
 import { UseCase } from "./usecaseContext";

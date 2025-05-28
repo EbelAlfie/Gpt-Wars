@@ -6,28 +6,28 @@ import { VsBackground } from "./VsAvatar"
 import { ChatTrigger } from "./ChatTrigger"
 import { UseCase } from "@/app/hooks/usecaseContext"
 import { useChat } from "@/app/hooks/useChat"
+import { useCharacterId } from "@/app/hooks/useCharacterId"
 
 export const ChatRoom = () => {
     const useCase = useContext(UseCase)
-    const playersId = useSearchParams()
-
-    const p1 = useMemo(() => playersId.get("p1"), [])
-    const p2 = useMemo(() => playersId.get("p2"), [])
+    const {p1, p2} = useCharacterId()
+    
+    const [isPaused, setPause] = useState(false)
     
     const [inputVisible, setInputVisibility] = useState(true)    
     const [chatViewState, setChatVisibility] = useState<ChatState>({ type: "close" })
 
-    const sendMessage = async (text: string, recipientId: string|null) => {
-        if (!recipientId || recipientId === "") return 
-        const recentChat = await useCase.fetchRecentChat(recipientId)
-        if (recentChat instanceof Error) {
-            return 
-        }
-        useCase.sendMessage(recentChat.chatId, recipientId, text)
-    }
-
     const players = usePlayer(p1, p2)
 
+    const sendMessage = async (text: string, recipientId: string|null) => {
+        if (players.type !== "loaded" || !recipientId || recipientId === "") return 
+
+        const model = players.data.get(recipientId)
+        if (!model) return 
+
+        useCase.sendMessage(model.recentChat.chatId, recipientId, text)
+    }
+    
     const chatState = useChat(
         players,
         (chat) => sendMessage(chat.message, chat.author.authorId === p1 ? p2 : p1)

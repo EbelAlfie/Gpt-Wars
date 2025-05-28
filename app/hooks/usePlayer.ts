@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react"
 import { Failed, Loaded, Loading, setError, setLoaded, setLoading } from "../common/UiState"
-import { CharacterModel } from "@/_characterai/_domain/response_model/CharacterModel"
 import { UseCase } from "./usecaseContext"
+import { Player } from "../chat/_model/Player"
 
-export type PlayersState = Loading | Loaded<CharacterModel[]> | Failed 
+export type PlayersState = Loading | Loaded<Map<string, Player>> | Failed 
 
 export const usePlayer = (player1: string| null, player2: string| null) => {
     const useCase = useContext(UseCase)
@@ -32,7 +32,33 @@ export const usePlayer = (player1: string| null, player2: string| null) => {
                 return 
             }
 
-            setPlayers(setLoaded(Array(firstPlayer, secPlayer)))
+            const recentChatP1 = await useCase.fetchRecentChat(player1)
+            if (recentChatP1 instanceof Error) {
+                setPlayers(setError(recentChatP1))
+                return 
+            }
+
+            const recentChatP2 = await useCase.fetchRecentChat(player2)
+            if (recentChatP2 instanceof Error) {
+                setPlayers(setError(recentChatP2))
+                return 
+            }
+
+            const player1Model = {
+                recentChat: recentChatP1,
+                model: firstPlayer
+            }
+
+            const player2Model = {
+                recentChat: recentChatP2,
+                model: secPlayer
+            }
+
+            const map = new Map()
+            map.set(player1, player1Model)
+            map.set(player2, player2Model)
+
+            setPlayers(setLoaded(map))
         }
 
         loadPlayers()

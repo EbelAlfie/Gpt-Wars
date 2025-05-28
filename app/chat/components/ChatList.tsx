@@ -56,6 +56,7 @@ const ChatList = ({...props}: {modMessage: string, state: ChatListState}) => {
 
         ref.scrollIntoView()
     }, [chatBubbles])
+
     return <>
         <div className="z-10 w-full h-full flex flex-col rounded-xl border border-white p-8 bg-slate-800">
             <ModeratorBubble message={props.modMessage}/>
