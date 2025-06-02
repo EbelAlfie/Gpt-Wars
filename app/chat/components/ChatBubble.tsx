@@ -19,6 +19,6 @@ export const ChatBubble = (props: ChatBubbleProps) => {
 
 export const ModeratorBubble = ({message}: {message: string}) => {
     return <div className="rounded-full w-full p-2 bg-slate-600">
-        <p className="text-center">{message}</p>
+        <p className="text-center select-none">{message}</p>
     </div>
 }
