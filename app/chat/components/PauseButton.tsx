@@ -6,7 +6,7 @@ type PauseButtonProps = {
 export const PauseButton = ({ paused, onClick }: PauseButtonProps) => {
     return <button 
         className="p-2 rounded-full border-2 border-slate-600 bg-yellow-100 flex-shrink" 
-        onClick={() => onClick(!paused)}
+        onClick={() => onClick(paused)}
     >
         <img 
             className="size-10"

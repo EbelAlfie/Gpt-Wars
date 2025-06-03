@@ -1,7 +1,8 @@
 "use client"
+import axios, { AxiosResponse } from "axios"
 import { discoverCharacter, fetchRecentChat, getCharacterInfo, loadChatHistory, resurrectCharacter } from "../action/ChatAction"
 import { CharacterResponse } from "./model/CharacterResponse"
-import { DetailResponse } from "./model/DetailResponse"
+import { CharacterDetailResponse, DetailResponse } from "./model/DetailResponse"
 import { RecentChatResponse } from "./model/RecentChatResponse"
 import { TurnResponse } from "./model/TurnResponse"
 
@@ -56,7 +57,30 @@ export class ChatRepository {
     }
 
     public async getCharacterInfo(charId: string): Promise<DetailResponse> {
-        return getCharacterInfo(charId, this.token)
-            .then(response => response)
+        const config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'https://neo.character.ai/character/v1/get_character_info',
+            headers: { 
+                'authorization': `Token ${this.token}`, 
+                'Accept': 'application/json, text/plain, */*', 
+                'accept-language': 'en-US,en;q=0.9,id;q=0.8', 
+            },
+            data: {
+                "external_id": charId,
+                "lang": "en"
+            }
+        }
+    
+        return await axios.request<any, AxiosResponse<CharacterDetailResponse>, any>(config)
+            .then(response => { 
+                console.log(response.headers)
+                return response.data
+            })
+            .catch(error => {
+                console.log(error.request)
+                console.log("Error")
+                return error
+            })
     }
 }
