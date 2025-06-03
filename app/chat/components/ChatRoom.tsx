@@ -37,8 +37,6 @@ export const ChatRoom = () => {
 
         if (paused.current) return 
 
-        console.log("send") 
-        console.log(paused.current) 
         const model = players.data.get(recipientId)
         if (!model) return 
 

@@ -11,9 +11,9 @@ export const ChatTrigger = ({
 
     return <>
         <div className={`absolute top-1/4 flex flex-col p-5 w-full h-fit items-center transition-all ${inputVisibility}`}>
-            <h1 className="text-4xl mb-8">Trigger Debate</h1>
+            <h1 className="text-4xl text-center mb-8">Trigger Debate</h1>
             <ChatBox 
-                className="w-[50%] max-w-[50%]"
+                className="md:w-[50%] sm:w-fit"
                 onSend={onSend}
             />
         </div>
