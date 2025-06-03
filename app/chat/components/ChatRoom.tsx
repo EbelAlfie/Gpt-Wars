@@ -18,6 +18,7 @@ export const ChatRoom = () => {
     const [chatViewState, setChatVisibility] = useState<ChatState>({ type: "close" })
 
     const lastState = useRef<{text: string, recipientId: string|null}>(null!)
+    const paused = useRef(isPaused)
     
     const players = usePlayer(p1, p2)
     
@@ -26,8 +27,7 @@ export const ChatRoom = () => {
         (chat) => sendMessage(chat.message, chat.author.authorId === p1 ? p2 : p1)
     )
 
-    const sendMessage = useCallback(async (text: string, recipientId: string|null) => {
-        console.log(players)
+    const sendMessage = async (text: string, recipientId: string|null) => {
         if (players.type !== "loaded" || !recipientId || recipientId === "") return 
 
         lastState.current = {
@@ -35,20 +35,19 @@ export const ChatRoom = () => {
             recipientId: recipientId
         }
 
-        if (isPaused) return 
+        if (paused.current) return 
 
         console.log("send") 
-        console.log(isPaused) 
+        console.log(paused.current) 
         const model = players.data.get(recipientId)
         if (!model) return 
 
         useCase.sendMessage(model.recentChat.chatId, recipientId, text)
-    }, [isPaused]) 
+    }
 
-    useEffect(() => { //Resume
-        if (!isPaused) return 
-        console.log("Resume") 
-        console.log(isPaused) 
+    useEffect(() => {
+        paused.current = isPaused
+        if (isPaused) return 
         const state = lastState.current
         sendMessage(state?.text, state?.recipientId)
     }, [isPaused])
@@ -56,7 +55,7 @@ export const ChatRoom = () => {
     return <>
         <ChatAction value={{
             isPaused: isPaused,
-            setPaused: (paused: boolean) => setPause(!paused)
+            setPaused: (pause: boolean) => setPause(!pause)
         }}>
             <main className="h-full w-full flex flex-col overflow-hidden">
                 <ChatListScreen 

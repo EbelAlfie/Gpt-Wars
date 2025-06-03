@@ -10,7 +10,7 @@ export const PauseButton = ({ paused, onClick }: PauseButtonProps) => {
     >
         <img 
             className="size-10"
-            src={paused ? "./pause.png" : "./play.svg"}
+            src={paused ? "./play.svg" : "./pause.png"}
         />
     </button>
 }
