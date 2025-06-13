@@ -14,7 +14,7 @@ export const mapCharacterItemModel = (response: CharacterResponse): CharacterIte
 
         const data = result?.data?.json?.character
             return {
-                externalId: data?.external_id ?? "",
+                externalId: data?.external_id ?? crypto.randomUUID(),
                 title: data?.title ?? "",
                 name: data?.name ?? "",
                 avatarFileName: `https://characterai.io/i/200/static/avatars/${data?.avatar_file_name ?? ""}`,

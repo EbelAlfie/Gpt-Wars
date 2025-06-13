@@ -1,7 +1,7 @@
 import { CharacterItemModel } from "@/_characterai/_domain/response_model/CharacterItemModel";
 import { useCharacter } from "@/_characterai/hook/useCharacters"
 import { CharacterItem } from "./CharacterItem";
-import { useCallback, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 export const CharacterListScreen = () => {
     const characters = useCharacter()
@@ -37,7 +37,7 @@ const CharacterListContent = ({characters}: { characters: CharacterItemModel[] }
         setSelected(list)
     }
 
-    const item = useMemo(() => //TODO temporary
+    const item = useMemo(() =>
         characters.map((character, index) => 
             <CharacterItem 
                 character={character} 
@@ -49,7 +49,7 @@ const CharacterListContent = ({characters}: { characters: CharacterItemModel[] }
         [characters, selectedChar]
     )
 
-    return <ul className="grid grid-cols-5 gap-4 w-auto h-full max-w-full bg-slate-700 p-6">
+    return <ul className="grid grid-cols-5 gap-4">
         {item}
     </ul>
 }

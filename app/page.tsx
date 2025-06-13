@@ -16,14 +16,14 @@ export default function HomePage () {
 
     return (
         <UseCase.Provider value = {useCase}>
-            <main className="h-full w-full">
+            <main className="h-screen w-screen flex flex-col">
                 <section className="w-full flex flex-row items-center">
                     <SearchBar className="self-center" query={querytext} onTextChanged={setText}/>
                 </section>
-                <section>
+                <section className="w-full h-1/3 max-h-screen max-w-screen flex-grow bg-slate-700 p-6 overflow-y-scroll">
                     <CharacterListScreen />
                 </section>
-                <section className="p-2">
+                <section className="flex flex-row justify-center items-center max-w-full w-full p-2">
                     <FightButton onClick={onFightClicked}/>
                 </section>
             </main>
