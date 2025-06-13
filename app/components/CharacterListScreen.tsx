@@ -24,16 +24,20 @@ export const CharacterListScreen = () => {
 const CharacterListContent = ({characters}: { characters: CharacterItemModel[] }) => {
     const [selectedChar, setSelected] = useState(new Array<number>(2))
 
-    const onCharacterSelected = useCallback((index: number) => {
-        let list: Array<number> = selectedChar 
-        const pos = list.find((value) => value === index)
-        if (pos !== undefined) return 
+    const onCharacterSelected = (index: number) => {
+        const list: Array<number> = [...selectedChar]
+        const pos = list.findLastIndex((value) => value === index)
+        if (pos !== -1) {
+            list.splice(pos, 1)
+            setSelected(list)
+            return 
+        }
 
         if (list.length >= 2) list.shift()
         list.push(index)
     
-        setSelected(Array(...list))
-    }, [])
+        setSelected(list)
+    }
 
     const item = useMemo(() => //TODO temporary
         characters.map((character, index) => 
