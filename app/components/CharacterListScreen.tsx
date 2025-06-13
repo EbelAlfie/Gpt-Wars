@@ -27,14 +27,12 @@ const CharacterListContent = ({characters}: { characters: CharacterItemModel[] }
     const onCharacterSelected = (index: number) => {
         const list: Array<number> = [...selectedChar]
         const pos = list.findLastIndex((value) => value === index)
-        if (pos !== -1) {
+        if (pos !== -1) 
             list.splice(pos, 1)
-            setSelected(list)
-            return 
+        else {
+            if (list.length >= 2) list.shift()
+            list.push(index)
         }
-
-        if (list.length >= 2) list.shift()
-        list.push(index)
     
         setSelected(list)
     }
