@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  @font-face {
+    font-family: "street-fight";
+    src: url("/font/street-fighter-6.ttf") ;
+  }
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -18,6 +25,18 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.neon-text {
+  color: black;
+  text-shadow: 
+    -2px -2px #e600ac, 
+    2px -2px #e600ac, 
+    -2px 2px #e600ac, 
+    2px 2px #e600ac,
+    2px 2px 20px #ff99e6,
+    2px 2px 20px #ff00bf;
+
 }
 
 .player-one-mask {

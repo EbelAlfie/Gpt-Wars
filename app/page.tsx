@@ -16,7 +16,8 @@ export default function HomePage () {
 
     return (
         <UseCase.Provider value = {useCase}>
-            <main className="h-screen w-screen flex flex-col">
+            <main className="h-screen w-screen flex flex-col py-2">
+                <h1 className="self-center neon-text text-5xl font-[street-fight]">Character Select</h1>
                 <section className="w-full flex flex-row items-center">
                     <SearchBar className="self-center" query={querytext} onTextChanged={setText}/>
                 </section>
