@@ -27,8 +27,15 @@ const CharacterListContent = ({characters}: { characters: CharacterItemModel[] }
 
     const onCharacterSelected = (index: number) => {
         const list: Array<number> = [...selectedChar]
-        // const pos = list.findLastIndex((value) => value === index)
+
+        const pos = list.findIndex(value => value === index)
+        if (pos !== undefined) {
+            const temp = list[playerState]
+            list[pos] = temp
+            
+        } 
         list[playerState] = index
+
         setPlayerState(playerState === 0 ? 1 : 0)
         setSelected(list)
     }
