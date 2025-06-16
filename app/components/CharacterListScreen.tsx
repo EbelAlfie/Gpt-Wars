@@ -23,17 +23,13 @@ export const CharacterListScreen = () => {
 
 const CharacterListContent = ({characters}: { characters: CharacterItemModel[] }) => {
     const [selectedChar, setSelected] = useState(new Array<number>(2))
+    const [playerState, setPlayerState] = useState(0)
 
     const onCharacterSelected = (index: number) => {
         const list: Array<number> = [...selectedChar]
-        const pos = list.findLastIndex((value) => value === index)
-        if (pos !== -1) 
-            list.splice(pos, 1)
-        else {
-            if (list.length >= 2) list.shift()
-            list.push(index)
-        }
-    
+        // const pos = list.findLastIndex((value) => value === index)
+        list[playerState] = index
+        setPlayerState(playerState === 0 ? 1 : 0)
         setSelected(list)
     }
 
@@ -41,7 +37,7 @@ const CharacterListContent = ({characters}: { characters: CharacterItemModel[] }
         characters.map((character, index) => 
             <CharacterItem 
                 character={character} 
-                selected={selectedChar.find(value => value === index) !== undefined}
+                selected={selectedChar.findIndex(value => value === index)}
                 key={index}
                 onSelected ={() => onCharacterSelected(index)}
             />

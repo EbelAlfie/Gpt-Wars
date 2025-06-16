@@ -23,3 +23,8 @@ export enum OperationTypes {
     Append = "append",
     Truncate = "truncate"
 }
+
+export enum PlayerStyle {
+    ONE,
+    TWO
+}
