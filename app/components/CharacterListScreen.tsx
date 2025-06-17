@@ -52,7 +52,7 @@ const CharacterListContent = ({characters}: { characters: CharacterItemModel[] }
         [characters, selectedChar]
     )
 
-    return <ul className="grid grid-cols-5 gap-4">
+    return <ul className="grid grid-cols-4 gap-2">
         {item}
     </ul>
 }
