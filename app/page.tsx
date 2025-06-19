@@ -9,6 +9,8 @@ import { FightButton } from "./components/FightButton";
 import "./globals.css";
 import { CharacterItemModel } from "@/_characterai/_domain/response_model/CharacterItemModel";
 import { SelectedPlayer } from "./hooks/playerContext";
+import { PlayerBanner } from "./components/PlayerBanner";
+import { PlayerStyle } from "@/common/Constants";
 
 export default function HomePage () {
     const useCase = useMemo(() => new ChatUseCase(), []) 
@@ -26,11 +28,11 @@ export default function HomePage () {
                 }   
             }>
                 <main className="h-screen w-screen flex flex-row justify-center items-center py-2">
-                    <section>
-
+                    <section className="flex-grow">
+                        <PlayerBanner model={selectedCharData[PlayerStyle.ONE]} />
                     </section>
-                    <section className="w-fit h-screen flex flex-col">
-                        <h1 className="self-center neon-text text-5xl font-[street-fight]">Character Select</h1>
+                    <section className="w-fit h-screen flex flex-col flex-grow">
+                        <h1 className="self-center neon-text text-5xl text-center font-[street-fight]">Character Select</h1>
                         <section className="flex flex-row justify-center self-center">
                             <SearchBar className="self-center" query={querytext} onTextChanged={setText}/>
                         </section>
@@ -41,8 +43,8 @@ export default function HomePage () {
                             <FightButton onClick={onFightClicked}/>
                         </section>
                     </section>
-                    <section>
-
+                    <section className="flex-grow" >
+                        <PlayerBanner model={selectedCharData[PlayerStyle.TWO]} />
                     </section>
                 </main>
             </SelectedPlayer.Provider>

@@ -1,7 +1,8 @@
 import { CharacterItemModel } from "@/_characterai/_domain/response_model/CharacterItemModel";
 import { useCharacter } from "@/_characterai/hook/useCharacters"
 import { CharacterItem } from "./CharacterItem";
-import { useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
+import { SelectedPlayer } from "../hooks/playerContext";
 
 export const CharacterListScreen = () => {
     const characters = useCharacter()
@@ -22,6 +23,10 @@ export const CharacterListScreen = () => {
 }
 
 const CharacterListContent = ({characters}: { characters: CharacterItemModel[] }) => {
+    const {
+        setSelectedPlayer
+    } = useContext(SelectedPlayer)
+
     const [selectedChar, setSelected] = useState(new Array<number>(2))
     const [playerState, setPlayerState] = useState(0)
 
@@ -38,6 +43,8 @@ const CharacterListContent = ({characters}: { characters: CharacterItemModel[] }
 
         setPlayerState(playerState === 0 ? 1 : 0)
         setSelected(list)
+        
+        setSelectedPlayer(list.map(id => characters[id]))
     }
 
     const item = useMemo(() =>
@@ -52,7 +59,7 @@ const CharacterListContent = ({characters}: { characters: CharacterItemModel[] }
         [characters, selectedChar]
     )
 
-    return <ul className="grid grid-cols-4 gap-2">
+    return <ul className="grid lg:grid-cols-4 grid-cols-2 gap-2">
         {item}
     </ul>
 }
