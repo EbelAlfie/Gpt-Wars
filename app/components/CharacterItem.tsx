@@ -30,11 +30,11 @@ export const CharacterItem = ({ character, selected, onSelected }: CharacterItem
     }
     , [player])
     return <>
-        <li className={`flex flex-col size-fit p-2 rounded-lg bg-slate-600 items-center hover:cursor-pointer ${style}`} 
+        <li className={`flex flex-col p-2 w-full aspect-square rounded-lg bg-slate-600 items-center hover:cursor-pointer ${style}`} 
             onClick={onSelected}
         >
             <img 
-                className="size-fit"
+                className="w-full aspect-square"
                 src={character.avatarFileName}
             />
             <p className="text-md text-ellipsis line-clamp-1 my-2 text-white">{character.name}</p>
