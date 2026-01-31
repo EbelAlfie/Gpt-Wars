@@ -12,14 +12,26 @@ import { SelectedPlayer } from "./hooks/playerContext";
 import { PlayerBanner } from "./components/PlayerBanner";
 import { PlayerStyle } from "@/common/Constants";
 import { useTheme } from "./hooks/useTheme";
+import { useRouter } from "next/navigation";
+import { createCharacterParam } from "./hooks/useCharacterId";
 
 export default function HomePage () {
     const useCase = useMemo(() => new ChatUseCase(), []) 
     const theme = useTheme()
+    const router = useRouter()
     const [querytext, setText] = useState("")
 
     const [selectedCharData, setSelectedCharData] = useState<CharacterItemModel[]>([])
-    const onFightClicked = useCallback(() => {}, [])
+    const onFightClicked = useCallback(() => {
+        const characters = selectedCharData
+        if (characters.length < 2) return //TODO
+
+        const firstPlay = selectedCharData[PlayerStyle.ONE]
+        const secondPlay = selectedCharData[PlayerStyle.TWO]
+
+        const params = createCharacterParam(firstPlay, secondPlay)
+        router.push(`/chat?${params.toString()}`)
+    }, [selectedCharData])
 
     return (
         <UseCase.Provider value = {useCase}>
