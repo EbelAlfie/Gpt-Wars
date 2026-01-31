@@ -1,6 +1,7 @@
 import { CharacterItemModel } from "@/_characterai/_domain/response_model/CharacterItemModel"
 import { PlayerStyle } from "@/common/Constants"
 import { useMemo } from "react"
+import { PlayerTheme, useTheme } from "../hooks/useTheme"
 
 type CharacterItemProp = { 
     character: CharacterItemModel, 
@@ -9,35 +10,37 @@ type CharacterItemProp = {
 }
 
 export const CharacterItem = ({ character, selected, onSelected }: CharacterItemProp) => {
-    const player: PlayerStyle| undefined = useMemo(() => {
+    const theme = useTheme()
+    const style = useMemo<PlayerTheme|null>(() => {
         switch(selected) {
-            case 0: return PlayerStyle.ONE
-            case 1: return PlayerStyle.TWO
-            default:
-                return undefined
-        }
-    }, [selected])
-    
-    const style = useMemo(() => {
-        switch(player) {
             case PlayerStyle.ONE: 
-                return "border-2 border-sky-300"
+                return theme.playerOneStyle
             case PlayerStyle.TWO:
-                return "border-2 border-red-300"
+                return theme.playerTwoStyle
             default: 
-                return ""
+                return null
         }
     }
-    , [player])
+    , [selected])
+
+    console.log(`vis ${style?.content} ${selected}`)
+
     return <>
-        <li className={`flex flex-col p-2 w-full aspect-square rounded-lg bg-slate-600 items-center hover:cursor-pointer ${style}`} 
+        <li className={`relative flex flex-col w-full h-full rounded-lg bg-slate-600 items-center hover:cursor-pointer`} 
             onClick={onSelected}
         >
+            <span className={`absolute pointer-events-none inset-0 rounded-lg z-10 ${style?.border}`}>
+                {style && 
+                    <p className={`absolute -top-4 left-1/2 -translate-x-1/2 ${style.text}`}>
+                        {style?.content}
+                    </p>
+                }
+            </span>
             <img 
-                className="w-full aspect-square"
+                className="w-full aspect-square rounded-tl-lg rounded-tr-lg"
                 src={character.avatarFileName}
             />
-            <p className="text-md text-ellipsis line-clamp-1 my-2 text-white">{character.name}</p>
+            <p className="text-md text-ellipsis line-clamp-1 mt-2 text-white">{character.name}</p>
         </li>
     </>
 }

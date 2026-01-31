@@ -8,6 +8,24 @@ export default {
   ],
   theme: {
     extend: {
+      animation: {
+        "pulse-scale" : "pulse-scale 0.5s ease-in-out infinite",
+        "blink": "blink 0.5s step-end infinite",
+      },
+      keyframes: {
+        "pulse-scale": { 
+          "100%, 0%": {
+            transform: "scale(1)"
+          },
+          "50%": {
+            transform: "scale(1.03)"
+          }
+        },
+        "blink": { 
+          "100%, 0%": { opacity: "100%" },
+          "50%": { opacity: "0%" }
+        }
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",

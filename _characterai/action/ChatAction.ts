@@ -31,6 +31,24 @@ export async function fetchRecentChat(characterId: string, token: string|undefin
         .then(response => response.data)
 }
 
+export async function searchCharacter(query: string, token: string| undefined): Promise<CharacterResponse> { 
+    const queryString = new URLSearchParams(
+        {
+            "searchQuery": "ges",
+            "sortedBy": "relevance"
+        }
+    )
+    const config = {
+        method: `GET`,
+        url: `https://character.ai/api/trpc/search.search?batch=1&input=${queryString}`,
+        headers: {
+            'authorization': `Token ${token}`
+        }
+    }
+    return axios.request<any, AxiosResponse<CharacterResponse>, any>(config)
+        .then(response => response.data)
+}
+
 export async function loadChatHistory(chatId: string, token: string|undefined): Promise<TurnResponse> {
     const config = {
         method: "GET",

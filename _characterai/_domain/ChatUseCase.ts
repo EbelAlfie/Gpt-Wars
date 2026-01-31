@@ -31,6 +31,11 @@ export class ChatUseCase {
             })
     }
 
+    public async searchCharacter(query: string): Promise<(CharacterItemModel|null)[]> { 
+        return this.repository.searchCharacter(query)
+            .then(response => mapCharacterItemModel(response))
+    }
+
     public async loadChatHistory(chatId: string): Promise<ChatTurnHistory[]> {
         return this.repository.loadChatHistory(chatId)
             .then(response => mapTurnHistory(response))

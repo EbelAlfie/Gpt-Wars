@@ -1,7 +1,10 @@
+import { useTheme } from "../hooks/useTheme"
+
 export const FightButton = ({ onClick }: { onClick: () => void }) => {
+    const theme = useTheme()
     return <>
         <button 
-            className="my-5 rounded-lg hover:scale-150 transition-transform text-center"
+            className={`my-5 ${theme.startStyle}`}
             onClick={onClick}
         >
             Fight!

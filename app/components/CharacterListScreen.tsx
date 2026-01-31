@@ -49,7 +49,7 @@ const CharacterListContent = ({characters}: { characters: CharacterItemModel[] }
 
     const item = useMemo(() =>
         characters.map((character, index) => 
-            <CharacterItem 
+            character && <CharacterItem 
                 character={character} 
                 selected={selectedChar.findIndex(value => value === index)}
                 key={index}

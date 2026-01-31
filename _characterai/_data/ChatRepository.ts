@@ -1,6 +1,6 @@
 "use client"
 import axios, { AxiosResponse } from "axios"
-import { discoverCharacter, fetchRecentChat, getCharacterInfo, loadChatHistory, resurrectCharacter } from "../action/ChatAction"
+import { discoverCharacter, fetchRecentChat, getCharacterInfo, loadChatHistory, resurrectCharacter, searchCharacter } from "../action/ChatAction"
 import { CharacterResponse } from "./model/CharacterResponse"
 import { CharacterDetailResponse, DetailResponse } from "./model/DetailResponse"
 import { RecentChatResponse } from "./model/RecentChatResponse"
@@ -40,6 +40,13 @@ export class ChatRepository {
         return fetchRecentChat(characterId, this.token)
             .then((response: RecentChatResponse) => {
                 return response
+            })
+    }
+
+    public async searchCharacter(query: string): Promise<CharacterResponse> { 
+        return searchCharacter(query, this.token)
+            .then(response => { 
+                return response  
             })
     }
 

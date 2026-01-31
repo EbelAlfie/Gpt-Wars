@@ -3,7 +3,7 @@ import { CharacterItemModel } from "../response_model/CharacterItemModel";
 import { CharacterDetailResponse } from "@/_characterai/_data/model/DetailResponse";
 import { CharacterModel } from "../response_model/CharacterModel";
 
-export const mapCharacterItemModel = (response: CharacterResponse): CharacterItemModel[] => {
+export const mapCharacterItemModel = (response: CharacterResponse): (CharacterItemModel | null)[] => {
     return response.map(item => {
         console.log(item)
         
@@ -11,15 +11,18 @@ export const mapCharacterItemModel = (response: CharacterResponse): CharacterIte
             result,
             error
         } = item
-
+        
         const data = result?.data?.json?.character
-            return {
-                externalId: data?.external_id ?? crypto.randomUUID(),
-                title: data?.title ?? "",
-                name: data?.name ?? "",
-                avatarFileName: `https://characterai.io/i/200/static/avatars/${data?.avatar_file_name ?? ""}`,
-                description: data?.description ?? ""
-            }
+
+        if (data == null) return null
+
+        return {
+            externalId: data.external_id ?? crypto.randomUUID(),
+            title: data.title ?? "",
+            name: data.name ?? "",
+            avatarFileName: `https://characterai.io/i/200/static/avatars/${data.avatar_file_name ?? ""}`,
+            description: data.description ?? ""
+        }
     })  
 }
 

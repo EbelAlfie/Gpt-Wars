@@ -11,9 +11,11 @@ import { CharacterItemModel } from "@/_characterai/_domain/response_model/Charac
 import { SelectedPlayer } from "./hooks/playerContext";
 import { PlayerBanner } from "./components/PlayerBanner";
 import { PlayerStyle } from "@/common/Constants";
+import { useTheme } from "./hooks/useTheme";
 
 export default function HomePage () {
     const useCase = useMemo(() => new ChatUseCase(), []) 
+    const theme = useTheme()
     const [querytext, setText] = useState("")
 
     const [selectedCharData, setSelectedCharData] = useState<CharacterItemModel[]>([])
@@ -32,9 +34,9 @@ export default function HomePage () {
                         <PlayerBanner model={selectedCharData[PlayerStyle.ONE]} />
                     </section>
                     <section className="w-fit h-screen flex flex-col">
-                        <h1 className="self-center neon-text text-5xl text-center font-[street-fight]">Character Select</h1>
+                        <h1 className={`self-center ${theme.headerStyle}`}>Character Select</h1>
                         <section className="flex flex-row justify-center self-center">
-                            <SearchBar className="self-center" query={querytext} onTextChanged={setText}/>
+                            <SearchBar className={`self-center ${theme.searchBarStyle}`} query={querytext} onTextChanged={setText}/>
                         </section>
                         <section className="h-1/3 max-h-screen max-w-screen flex-grow bg-slate-700 p-6 overflow-y-scroll">
                             <CharacterListScreen />

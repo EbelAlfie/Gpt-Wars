@@ -3,7 +3,7 @@ export const SearchBar = (
 ) => {
     return <>
         <input 
-            className={`m-5 p-2 rounded-l ${className}`}
+            className={`m-5 p-2 ${className}`}
             value={query}
             onChange={(element) => onTextChanged(element.target.value)}
             placeholder="Search"
