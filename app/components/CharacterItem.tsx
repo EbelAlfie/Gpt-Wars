@@ -31,7 +31,7 @@ export const CharacterItem = ({ character, selected, onSelected }: CharacterItem
         >
             <span className={`absolute pointer-events-none inset-0 rounded-lg z-10 ${style?.border}`}>
                 {style && 
-                    <p className={`absolute -top-4 left-1/2 -translate-x-1/2 ${style.text}`}>
+                    <p className={`absolute -top-7 left-1/2 -translate-x-1/2 pt-0.5 px-0.5 ${style.text}`}>
                         {style?.content}
                     </p>
                 }
@@ -40,7 +40,7 @@ export const CharacterItem = ({ character, selected, onSelected }: CharacterItem
                 className="w-full aspect-square rounded-tl-lg rounded-tr-lg"
                 src={character.avatarFileName}
             />
-            <p className="text-md text-ellipsis line-clamp-1 mt-2 text-white">{character.name}</p>
+            <p className={`${theme.playerName} text-xs text-ellipsis line-clamp-1 overflow-x-hidden m-2 text-white`}>{character.name}</p>
         </li>
     </>
 }

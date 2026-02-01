@@ -7,6 +7,10 @@
     font-family: "street-fight";
     src: url("/font/street-fighter-6.ttf") ;
   }
+  @font-face { 
+    font-family: "retro-font";
+    src : url("/font/Press_Start_2P/PressStart2P-Regular.ttf");
+  }
 }
 
 :root {
@@ -36,7 +40,14 @@ body {
     2px 2px #e600ac,
     2px 2px 20px #ff99e6,
     2px 2px 20px #ff00bf;
+}
 
+.retro-text { 
+  background: linear-gradient(to bottom, #cc0121, #ffcb78);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(4px 1px #0043a8) drop-shadow(1px 4px #0043a8);
 }
 
 .player-one-mask {

@@ -33,6 +33,8 @@ export default function HomePage () {
         router.push(`/chat?${params.toString()}`)
     }, [selectedCharData])
 
+    const bannerStyle = useMemo(() => "w-1/5 flex-shrink-0", [])
+
     return (
         <UseCase.Provider value = {useCase}>
             <SelectedPlayer.Provider value= {
@@ -42,22 +44,18 @@ export default function HomePage () {
                 }   
             }>
                 <main className="h-screen w-screen flex flex-row justify-center items-center py-2">
-                    <section className="w-1/3">
+                    <section className={bannerStyle}>
                         <PlayerBanner model={selectedCharData[PlayerStyle.ONE]} />
                     </section>
-                    <section className="w-fit h-screen flex flex-col">
-                        <h1 className={`self-center ${theme.headerStyle}`}>Character Select</h1>
-                        <section className="flex flex-row justify-center self-center">
-                            <SearchBar className={`self-center ${theme.searchBarStyle}`} query={querytext} onTextChanged={setText}/>
-                        </section>
-                        <section className="h-1/3 max-h-screen max-w-screen flex-grow bg-slate-700 p-6 overflow-y-scroll">
-                            <CharacterListScreen />
-                        </section>
-                        <section className="flex flex-row justify-center items-center max-w-full p-2">
-                            <FightButton onClick={onFightClicked}/>
-                        </section>
+                    <section className="w-3/5 flex-1 h-screen flex flex-col">
+                        <h1 className={`self-center mt-2 ${theme.headerStyle}`}>Player Select</h1>
+                        <CharacterListScreen 
+                            querytext={querytext} 
+                            setQueryText={setText} 
+                            onFightClicked={onFightClicked}
+                        />
                     </section>
-                    <section className="w-1/3" >
+                    <section className={bannerStyle} >
                         <PlayerBanner model={selectedCharData[PlayerStyle.TWO]} />
                     </section>
                 </main>

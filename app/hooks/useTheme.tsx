@@ -7,19 +7,22 @@ export type PlayerTheme = {
 }
 
 class Theme { 
-    headerStyle = "neon-text text-5xl text-center font-[street-fight]"
+    headerStyle = "retro-text text-4xl text-center font-[retro-font]"
+    debateStyle = "font-[retro-font]"
     searchBarStyle = "rounded-lg border-pink-600 bg-blue-950 placeholder-blue-400"
     playerOneStyle = {
         content: "1P",
-        text: "text-sky-300",
-        border: "border-2 border-sky-300 animate-pulse-scale"
+        text: "bg-[#0000ff] font-[retro-font]",
+        border: "border-2 border-[#0000ff] animate-pulse-scale"
     }
     playerTwoStyle = {
         content: "2P",
-        text: "text-red-300",
-        border: "border-2 border-red-300 animate-pulse-scale"
+        text: "bg-[#ff3d03] font-[retro-font]",
+        border: "border-2 border-[#ff3d03] animate-pulse-scale"
     }
-    startStyle = "animate-blink font-bold text-lg transition-transform text-center rounded-lg hover:scale-150"
+    playerName = "font-[retro-font]"
+    loadingText= "font-[retro-font] text-5xl animate-blink"
+    startStyle = "animate-blink font-[retro-font] font-bold text-lg transition-transform text-center rounded-lg hover:scale-150"
 }
 
 const ThemeProvider = createContext(new Theme())
