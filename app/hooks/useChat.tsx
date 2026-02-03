@@ -71,7 +71,7 @@ export const useChat = (
                 }
             }
 
-            if (turn.candidates[0].isFinal) 
+            if (turn.candidates && turn.candidates[0].isFinal) 
                 onFinalMessage(newList[currentPosition])
         })
 

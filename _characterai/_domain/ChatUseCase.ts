@@ -65,7 +65,11 @@ export class ChatUseCase {
 
     /**WebSocket */
     public openWebsocketConnection() {
-        this.repository.openChatConnection()
+        try { 
+            this.repository.openChatConnection()
+        } catch(error) { 
+            this.repository.onError(new CloseEvent("close"))
+        }
     }
 
     public closeWebsocketConnection() {

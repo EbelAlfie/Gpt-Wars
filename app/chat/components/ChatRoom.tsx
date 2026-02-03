@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react"
-import { ChatListScreen, ChatState } from "./ChatList"
+import { ChatListScreen, ChatState, ErrorChatList } from "./ChatList"
 import { usePlayer } from "@/app/hooks/usePlayer"
 import { VsBackground } from "./VsAvatar"
 import { ChatTrigger } from "./ChatTrigger"
@@ -26,6 +26,10 @@ export const ChatRoom = () => {
         players,
         (chat) => sendMessage(chat.message, chat.author.authorId === p1 ? p2 : p1)
     )
+
+    const onRefresh = useMemo(() => {
+        return () => {}
+    }, [])
 
     const sendMessage = async (text: string, recipientId: string|null) => {
         if (players.type !== "loaded" || !recipientId || recipientId === "") return 
@@ -56,24 +60,28 @@ export const ChatRoom = () => {
             setPaused: (pause: boolean) => setPause(!pause)
         }}>
             <main className="h-full w-full flex flex-col overflow-hidden">
-                <ChatListScreen 
-                    state={chatViewState}
-                    listState={chatState}
-                />
-                
                 <VsBackground state={players}/>
-                
-                <ChatTrigger
-                    visible = {inputVisible}
-                    onSend = {(text: string) => {
-                        sendMessage(text, p1)
-                        setInputVisibility(false)
-                        setChatVisibility({ 
-                            type: "open",
-                            modMessage: text
-                        })
-                    }}
-                /> 
+                { chatViewState.type === "open" ? 
+                    <>
+                        <ChatListScreen 
+                            state={chatViewState}
+                            listState={chatState}
+                        />
+                        
+                        <ChatTrigger
+                            visible = {inputVisible}
+                            onSend = {(text: string) => {
+                                sendMessage(text, p1)
+                                setInputVisibility(false)
+                                setChatVisibility({ 
+                                    type: "open",
+                                    modMessage: text
+                                })
+                            }}
+                        /> 
+                    </> :
+                      <ErrorChatList onRefresh={onRefresh}></ErrorChatList>
+                }
             </main>
         </ChatAction>
     </>    

@@ -20,12 +20,15 @@ type ChatListProps = {
 export const ChatListScreen = ({state, listState}: { state: ChatState, listState: ChatRoomUiState }) => {
     const animation = useMemo(() => state.type === "open" ? "show-chat" : "hide-chat", [state])
     return <div className={`absolute left-1/4 w-1/2 h-screen max-h-screen transition-all ${animation}`}>
-        {state.type === "open" &&
+        {state.type === "open" ?
             <ChatListContent
                 modMessage={state.modMessage}
                 chatState={listState}
-            />
-        }
+            /> 
+        : state.type === "close" ? 
+            <h1 className="top-2">Error Euy</h1> 
+        : <></>
+        } 
     </div>
 }
 
@@ -77,4 +80,11 @@ const ChatList = ({...props}: {modMessage: string, state: ChatListState}) => {
             </ul>
         </div>
     </> 
+}
+
+export const ErrorChatList = ({onRefresh}: {onRefresh: () => void}) => { 
+    return <div className="flex flex-col justify-center items-center">
+        <h3 className="font-[retro-font] text-5xl">Error!!</h3>
+        <button className="bg-black p-6 rounded-full text-4xl">Restart</button>
+    </div>
 }
