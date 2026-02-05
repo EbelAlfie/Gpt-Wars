@@ -22,14 +22,10 @@ export const ChatRoom = () => {
     
     const players = usePlayer(p1, p2)
     
-    const chatState = useChat(
+    const {chatState, reconnect} = useChat(
         players,
         (chat) => sendMessage(chat.message, chat.author.authorId === p1 ? p2 : p1)
     )
-
-    const onRefresh = useMemo(() => {
-        return () => {}
-    }, [])
 
     const sendMessage = async (text: string, recipientId: string|null) => {
         if (players.type !== "loaded" || !recipientId || recipientId === "") return 
@@ -59,7 +55,7 @@ export const ChatRoom = () => {
             isPaused: isPaused,
             setPaused: (pause: boolean) => setPause(!pause)
         }}>
-            <main className="h-full w-full flex flex-col overflow-hidden">
+            <main className="relative h-full w-full flex flex-col overflow-hidden">
                 <VsBackground state={players}/>
                 { chatViewState.type === "open" ? 
                     <>
@@ -80,7 +76,7 @@ export const ChatRoom = () => {
                             }}
                         /> 
                     </> :
-                      <ErrorChatList onRefresh={onRefresh}></ErrorChatList>
+                      <ErrorChatList onRefresh={reconnect}></ErrorChatList>
                 }
             </main>
         </ChatAction>

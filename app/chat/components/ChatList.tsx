@@ -83,8 +83,11 @@ const ChatList = ({...props}: {modMessage: string, state: ChatListState}) => {
 }
 
 export const ErrorChatList = ({onRefresh}: {onRefresh: () => void}) => { 
-    return <div className="flex flex-col justify-center items-center">
+    return <div className="absolute right-1/2 left-1/2 h-full flex flex-col justify-center items-center gap-10">
         <h3 className="font-[retro-font] text-5xl">Error!!</h3>
-        <button className="bg-black p-6 rounded-full text-4xl">Restart</button>
+        <button 
+            className="bg-black p-6 rounded-full text-4xl"
+            onClick={onRefresh}
+        >Restart</button>
     </div>
 }

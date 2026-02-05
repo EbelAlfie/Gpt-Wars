@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { PlayersState } from "./usePlayer";
 import { UseCase } from "./usecaseContext";
 import { ChatTurnHistory } from "@/_characterai/_domain/response_model/ChatTurnHistory";
@@ -11,15 +11,18 @@ export const useChat = (
     onFinalMessage: (chat: ChatListModel) => void
 ) => {
     const useCase = useContext(UseCase)
-
     const [chatListState, updateState] = useState<ChatRoomUiState>(setLoading())
+
+    const connect = useCallback(() => {
+        updateState(setLoading())
+        useCase.openWebsocketConnection()
+    }, [])
 
     const uiStateRef = useRef(chatListState) //TODO optimize ? 
     useEffect(() => {uiStateRef.current = chatListState},[chatListState])
 
     useEffect(() => {
         if (playerState.type !== "loaded") return 
-        updateState(setLoading())
 
         useCase.registerOpenListener(() => {
             updateState(setLoaded({chatList: []}))
@@ -73,10 +76,11 @@ export const useChat = (
 
             if (turn.candidates && turn.candidates[0].isFinal) 
                 onFinalMessage(newList[currentPosition])
-        })
 
-        useCase.openWebsocketConnection()
+            return useCase.closeWebsocketConnection
+        })
+        connect()
     }, [playerState])
 
-    return chatListState
+    return {chatState: chatListState, reconnect: connect }
 }
