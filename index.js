@@ -26,7 +26,6 @@ let config = {
     'Content-Type': 'application/json', 
     "Cache-Control": "no-cache",
     'Cookie': 'AMP_39bbdcaee6=JTdCJTIyZGV2aWNlSWQlMjIlM0ElMjI0OWUwYzM1MS1iYTI3LTRhYmEtOWY1Yy1hZjI5ZDc3NTVhOWYlMjIlN0Q; __cf_bm=gxOVTYUeuaxZhJvtp7wKBKdyinwK._IQt0OAwTYdkmI-1748322192-1.0.1.1-aAQu4HwoJcOLlxaJ6XwzdgggJPXZlC5V_K219DAVQqOS2Tmmev7OWQXS4dgIzP.oMkOBGCOVFOjh6Pn_YBo0xIKlTwdIh7HYOXqGRZteNvc; _cfuvid=V5IrvkGSAZBOxlECecAeNN2KFRt4knJ5DgX2yQI_1tI-1748322283270-0.0.1.1-604800000; GCLB=CL7g_vDetpuOxQEQAw',
-    "Postman-Token": crypto.randomUUID()
   },
   data : data
 };

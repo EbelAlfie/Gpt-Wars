@@ -7,6 +7,7 @@ import { Message } from "@/app/chat/_model/Message";
 import { ServerEvent } from "@/_chatgpt/domain/entity/ServerEvent";
 import { ChatState } from "../../../app/chat/components/state/ChatState";
 import { GptMessageProcessor } from "../GptMessageProcessor";
+import { getUUID } from "@/_characterai/utils";
 
 const processor = new GptMessageProcessor()
 
@@ -45,7 +46,7 @@ export const sendChat = async (
     const chatStream = await useCase.openConversation(
         messageRequest, 
         chatRequirement,
-        lastChat?.id ?? crypto.randomUUID(),
+        lastChat?.id ?? getUUID(),
         onStreaming
     )
     if (chatStream instanceof Error) {

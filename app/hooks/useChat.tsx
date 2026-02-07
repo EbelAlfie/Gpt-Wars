@@ -25,10 +25,12 @@ export const useChat = (
         if (playerState.type !== "loaded") return 
 
         useCase.registerOpenListener(() => {
+            console.log("Success open ws")
             updateState(setLoaded({chatList: []}))
         })
 
         useCase.registerErrorListener((message: Event) => {
+            console.log("Error open ws" + message)
             updateState(setError(Error(JSON.stringify(message))))
         })
 
@@ -74,10 +76,10 @@ export const useChat = (
                 }
             }
 
-            if (turn.candidates && turn.candidates[0].isFinal) 
-                onFinalMessage(newList[currentPosition])
+            console.log(turn)
 
-            return useCase.closeWebsocketConnection
+            if (!turn || (turn.candidates && turn.candidates[0].isFinal)) 
+                onFinalMessage(newList[currentPosition])
         })
         connect()
     }, [playerState])

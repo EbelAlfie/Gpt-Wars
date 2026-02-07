@@ -1,6 +1,6 @@
 import { mapRecentChat, RecentChatModel } from "./response_model/RecentChat";
 import { ChatTurnHistory, mapTurnHistory, parseTurn } from "./response_model/ChatTurnHistory";
-import { getRequestId } from "../utils";
+import { getRequestId, getUUID } from "../utils";
 import { ChatRepository } from "../_data/ChatRepository";
 import { ChatEventType } from "../common/Const";
 import { mapCharacterItemModel, mapCharacterModel } from "./mapper/CharacterMapper";
@@ -68,6 +68,7 @@ export class ChatUseCase {
         try { 
             this.repository.openChatConnection()
         } catch(error) { 
+            console.log("Error open ws" + error)
             this.repository.onError(new CloseEvent("close"))
         }
     }
@@ -83,12 +84,13 @@ export class ChatUseCase {
     ) {
         const eventType = ChatEventType.CREATE_GENERATE
         const requestId = getRequestId(characterId)
-        const primaryCandidateId = crypto.randomUUID() 
-        const turnId = crypto.randomUUID() 
+        const primaryCandidateId = getUUID() 
+        const turnId = getUUID() 
 
         const model = {
             command: eventType,
             request_id: requestId,
+            origin_id: "web-next",
             payload: {
                 num_candidates: 1,
                 tts_enabled: false,

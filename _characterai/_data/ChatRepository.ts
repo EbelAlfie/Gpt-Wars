@@ -64,30 +64,6 @@ export class ChatRepository {
     }
 
     public async getCharacterInfo(charId: string): Promise<DetailResponse> {
-        const config = {
-            method: 'post',
-            maxBodyLength: Infinity,
-            url: 'https://neo.character.ai/character/v1/get_character_info',
-            headers: { 
-                'authorization': `Token ${this.token}`, 
-                'Accept': 'application/json, text/plain, */*', 
-                'accept-language': 'en-US,en;q=0.9,id;q=0.8', 
-            },
-            data: {
-                "external_id": charId,
-                "lang": "en"
-            }
-        }
-    
-        return await axios.request<any, AxiosResponse<CharacterDetailResponse>, any>(config)
-            .then(response => { 
-                console.log(response.headers)
-                return response.data
-            })
-            .catch(error => {
-                console.log(error.request)
-                console.log("Error")
-                return error
-            })
+        return getCharacterInfo(charId, this.token)
     }
 }

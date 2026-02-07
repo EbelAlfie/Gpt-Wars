@@ -57,7 +57,8 @@ export const ChatRoom = () => {
         }}>
             <main className="relative h-full w-full flex flex-col overflow-hidden">
                 <VsBackground state={players}/>
-                { chatViewState.type === "open" ? 
+                {
+                    players.type === "loaded" ? 
                     <>
                         <ChatListScreen 
                             state={chatViewState}
@@ -76,7 +77,9 @@ export const ChatRoom = () => {
                             }}
                         /> 
                     </> :
-                      <ErrorChatList onRefresh={reconnect}></ErrorChatList>
+                    players.type === "error" ?
+                    <ErrorChatList onRefresh={() => {}}></ErrorChatList> : 
+                    <></>
                 }
             </main>
         </ChatAction>

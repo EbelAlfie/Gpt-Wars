@@ -12,7 +12,7 @@ export const ChatBox = ({...props}: ChatFooterProps) => {
     const borderRadius = useMemo(() => "rounded-2xl", [])
     const [textValue, setTextValue] = useState<string>("")
 
-    const onTextChanged = (changedEvent: ChangeEvent<HTMLInputElement>) => {
+    const onTextChanged = (changedEvent: ChangeEvent<HTMLTextAreaElement>) => {
         const text = changedEvent.target.value ?? ""
         if (text === "") return
 

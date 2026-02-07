@@ -5,6 +5,7 @@ import { constructTurnsTileToken, decoder, getEnforcementToken, HD } from "@/_ch
 import { ServerEvent } from "./entity/ServerEvent";
 import { ChatRequirementResponse } from "../data/model/ChatRequirementResponse";
 import { CompletionType } from "@/common/Constants";
+import { getUUID } from "@/_characterai/utils";
 
 export class ChatGptUseCase {
     repository: ChatGptRepository = new ChatGptRepository()
@@ -28,7 +29,7 @@ export class ChatGptUseCase {
         const turntileToken = await constructTurnsTileToken(requirement.turnstile.dx)
         const proofToken = getEnforcementToken(requirement)
 
-        const parentMessageId = lastChat ?? crypto.randomUUID()
+        const parentMessageId = lastChat ?? getUUID()
         const conversationRequest = {
             chatRequirementToken: requirement.token,
             turnstileToken: turntileToken,

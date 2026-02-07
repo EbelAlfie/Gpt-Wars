@@ -19,7 +19,18 @@ export const usePlayer = (player1: string| null, player2: string| null) => {
         setPlayers(setLoading())
 
         const loadPlayers = async () => {
-            
+
+            // const resurect = await useCase.resurectCharacter(player1)
+            // if (resurect instanceof Error) {
+            //     setPlayers(setError(resurect))
+            //     return 
+            // }
+            // const resurect2 = await useCase.resurectCharacter(player2)
+            // if (resurect2 instanceof Error) {
+            //     setPlayers(setError(resurect2))
+            //     return 
+            // }
+
             const firstPlayer = await useCase.getCharacterInfo(player1)
             if (firstPlayer instanceof Error) {
                 setPlayers(setError(firstPlayer))

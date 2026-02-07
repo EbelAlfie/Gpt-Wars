@@ -2,6 +2,7 @@
 import { sha3_512 } from "js-sha3";
 import { ChatRequirementResponse } from "./model/ChatRequirementResponse";
 import { ServerEvent } from "@/_chatgpt/domain/entity/ServerEvent";
+import { getUUID } from "@/_characterai/utils";
 
 export const answers = new Map<string, string>()
 
@@ -95,7 +96,7 @@ function getConfig() {
 }
 
 export function generateSid() {
-    return crypto.randomUUID()
+    return getUUID()
 }
 
 function textDecoder(text: any) {
